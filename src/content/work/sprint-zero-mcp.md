@@ -4,7 +4,7 @@ summary: An AI-driven solution that turns requirements into features, user stori
 sector: Delivery Engineering
 role: Solution Architect & AI Delivery Lead
 period: 2023 – 2026
-order: 4
+order: 6
 pillar: agentic
 stack: [GitHub Copilot, Azure DevOps MCP server, Model Context Protocol, Azure Boards]
 metrics:

@@ -4,7 +4,7 @@ summary: Legacy clinical-trial document repositories moved to Azure with automat
 sector: Life Sciences · Clinical Operations
 role: Technical Architect
 period: 2019 – 2023
-order: 5
+order: 7
 pillar: data
 stack: [Azure Storage, OCR pipelines, REST APIs, Veeva Vault, CTMS, EDC]
 metrics:

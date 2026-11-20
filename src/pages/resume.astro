@@ -1,12 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, experience, skills, certifications, education, research } from '../data/profile';
+import { site, experience, skills, certifications, education, research, industries } from '../data/profile';
 import { getSessions } from '../lib/content';
 
 const sessions = (await getSessions()).filter((s) => !s.data.placeholder);
 ---
 
-<Base title="Résumé" description={`Résumé of ${site.name}, ${site.role} — agentic AI, RAG, data engineering and legacy modernization for regulated industries.`}>
+<Base title="Résumé" description={`Résumé of ${site.name}, ${site.role} — agentic AI, RAG, data engineering and legacy modernization across industries.`}>
   <div class="container resume">
     <div class="toolbar no-print">
       <span class="eyebrow">Résumé</span>
@@ -26,10 +26,10 @@ const sessions = (await getSessions()).filter((s) => !s.data.placeholder);
     <section class="r-sec">
       <h2 class="r-h">Summary</h2>
       <p>
-        AI and data architect with 18 years at Accenture and 3+ years leading generative and agentic AI delivery for regulated
-        life-sciences and financial-services clients. Designs LLM systems end to end: RAG with hybrid vector and structured
+        AI and data architect with 18 years at Accenture across banking, insurance, life sciences, public transportation,
+        asset management and manufacturing, and 3+ years leading generative and agentic AI delivery. Designs LLM systems end to end: RAG with hybrid vector and structured
         retrieval, GraphRAG knowledge bases, and multi-agent orchestration with tool calling, human-in-the-loop controls,
-        guardrails and audit trails — delivered under GxP, HIPAA, FDA 21 CFR Part 11 and PCI. Built on hands-on data
+        guardrails and audit trails — including under PCI, HIPAA, GxP and FDA 21 CFR Part 11 where required. Built on hands-on data
         engineering across Azure Data Factory, Databricks, Synapse, Azure Data Lake, Python and SQL. Primary technical point of
         contact for client executives and Microsoft product engineering.
       </p>
@@ -58,6 +58,15 @@ const sessions = (await getSessions()).filter((s) => !s.data.placeholder);
       </ul>
     </section>
 
+    <section class="r-sec">
+      <h2 class="r-h">Peer review</h2>
+      <ul>
+        {research.reviewing.records.map((r) => (
+          <li><strong>{r.venue}</strong> — {r.kind}{r.reviewType && ` (${r.reviewType.toLowerCase()})`}, {r.venueFull}{r.venue.startsWith('ICDSCNC') ? `, ${r.organizer}` : ''}, {r.date}.</li>
+        ))}
+      </ul>
+    </section>
+
     {sessions.length > 0 && (
       <section class="r-sec">
         <h2 class="r-h">Teaching &amp; speaking</h2>
@@ -68,6 +77,11 @@ const sessions = (await getSessions()).filter((s) => !s.data.placeholder);
         </ul>
       </section>
     )}
+
+    <section class="r-sec">
+      <h2 class="r-h">Industry experience</h2>
+      <p>{industries.map((i) => i.name).join(' · ')}</p>
+    </section>
 
     <section class="r-sec">
       <h2 class="r-h">Skills</h2>

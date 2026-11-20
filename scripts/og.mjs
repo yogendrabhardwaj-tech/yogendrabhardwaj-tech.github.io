@@ -44,16 +44,16 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
   <text x="94" y="101" text-anchor="middle" font-family="Menlo, monospace" font-size="17" font-weight="700" fill="#0a0c10">YB</text>
   <text x="134" y="92" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#e7e9ee">Yogendra K. Bhardwaj</text>
   <text x="134" y="114" font-family="Menlo, monospace" font-size="14" fill="#ffc86b">PROFESSIONAL SNAPSHOT</text>
-  <text x="72" y="250" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="64" letter-spacing="-2" fill="#ffffff">Agentic AI</text>
-  <text x="72" y="326" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="64" letter-spacing="-2" fill="#ffffff">that passes</text>
-  <text x="72" y="402" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="64" letter-spacing="-2" fill="#ffffff">the audit.</text>
-  <text x="72" y="470" font-family="Helvetica, Arial, sans-serif" font-size="21" fill="#b8bfcc">Governed GenAI &amp; multi-agent systems for life sciences</text>
-  <text x="72" y="500" font-family="Helvetica, Arial, sans-serif" font-size="21" fill="#b8bfcc">and financial services · 18 years at Accenture</text>
+  <text x="72" y="250" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="64" letter-spacing="-2" fill="#ffffff">Enterprise AI</text>
+  <text x="72" y="326" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="64" letter-spacing="-2" fill="#ffffff">you can</text>
+  <text x="72" y="402" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="64" letter-spacing="-2" fill="#ffffff">trust.</text>
+  <text x="72" y="470" font-family="Helvetica, Arial, sans-serif" font-size="21" fill="#b8bfcc">AI agents, RAG &amp; data platforms · banking, insurance,</text>
+  <text x="72" y="500" font-family="Helvetica, Arial, sans-serif" font-size="21" fill="#b8bfcc">pharma, transit, manufacturing · 18 years at Accenture</text>
   ${trace}
   <text x="${tx}" y="${ty + 7 * 40 + 14}" font-family="Menlo, monospace" font-size="15" fill="#fde047">✓ grounded  ✓ approved  ✓ audited</text>
   <line x1="72" y1="558" x2="1128" y2="558" stroke="#1f2430"/>
   <text x="72" y="590" font-family="Menlo, monospace" font-size="16" fill="#8b93a5">yogendrabhardwaj.runs-on.dev</text>
-  <text x="1128" y="590" text-anchor="end" font-family="Menlo, monospace" font-size="16" fill="#8b93a5">GxP · HIPAA · 21 CFR Part 11 · PCI</text>
+  <text x="1128" y="590" text-anchor="end" font-family="Menlo, monospace" font-size="16" fill="#8b93a5">8 industries · 4× Azure certified</text>
 </svg>`;
 
 await sharp(Buffer.from(svg)).png().toFile(new URL('../public/og.png', import.meta.url).pathname);

@@ -36,6 +36,7 @@ const impact = metrics.filter((m) => ['18', '200+', '15→5', '4×'].includes(m.
             <span>·</span><a href={site.linkedin}>linkedin.com/in/yogendrabhardwaj</a>
             <span>·</span><a href={site.url}>yogendrabhardwaj.runs-on.dev</a>
             <span>·</span><a href={research.scholar}>Google Scholar</a>
+            <span>·</span><a href={research.orcid}>ORCID 0009-0000-6044-4189</a>
           </p>
         </div>
       </header>
@@ -76,13 +77,17 @@ const impact = metrics.filter((m) => ['18', '200+', '15→5', '4×'].includes(m.
           </section>
 
           <section>
-            <h3 class="s-h">Publication</h3>
+            <h3 class="s-h">Publications &amp; writing</h3>
             <p class="s-pub"><strong>{pub.title}</strong><br />{pub.authors.join(', ')}. <em>{pub.venue}</em>, {pub.year}.</p>
+            <p class="s-small" style="margin-top:6px">Book on AI — {research.book.status.toLowerCase()}.</p>
           </section>
 
           <section>
-            <h3 class="s-h">Book</h3>
-            <p class="s-small">{research.book.title || 'A book on AI'} — {research.book.status.toLowerCase()}.</p>
+            <h3 class="s-h">Peer review</h3>
+            <ul class="s-list">
+              <li><strong>ICDSCNC 2026</strong> — conference paper reviewer, certificate of appreciation (Aug 2026)</li>
+              <li><strong>IGI Global</strong> — {research.reviewing.records.filter((r) => r.venue.startsWith('IGI')).length} book chapters, double-anonymized (May 2026)</li>
+            </ul>
           </section>
 
           <section>

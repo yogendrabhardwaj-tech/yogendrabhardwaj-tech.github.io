@@ -7,6 +7,7 @@ const menus = [
   {
     label: 'Expertise',
     items: [
+      { href: '/#industries', title: 'Industries', text: 'Banking, insurance, pharma, transit, manufacturing…' },
       { href: '/#build', title: 'Agentic AI', text: 'Multi-agent systems with humans in the loop' },
       { href: '/#build', title: 'Grounded RAG', text: 'Answers that cite their source — or decline' },
       { href: '/#build', title: 'Data & Modernization', text: 'Pipelines, platforms and legacy migration' },
@@ -17,7 +18,7 @@ const menus = [
     label: 'Work',
     items: [
       ...work.slice(0, 4).map((w) => ({ href: `/work/${w.id}/`, title: w.data.title, text: w.data.sector })),
-      { href: '/work/', title: 'All case studies →', text: `${work.length} case studies from regulated delivery` },
+      { href: '/work/', title: 'All case studies →', text: `${work.length} case studies across industries` },
     ],
   },
   {

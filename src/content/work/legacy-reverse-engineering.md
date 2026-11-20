@@ -4,7 +4,7 @@ summary: A GenAI pipeline using GitHub Copilot and Claude that turns undocumente
 sector: Financial Services · Modernization
 role: Solution Architect & AI Delivery Lead
 period: 2023 – 2026
-order: 3
+order: 5
 pillar: data
 stack: [Claude, GitHub Copilot, Copilot agents, Source control, Test scaffolding]
 metrics:

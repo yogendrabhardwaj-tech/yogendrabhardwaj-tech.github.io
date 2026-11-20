@@ -248,5 +248,6 @@ pre.astro-code {
 @media print {
   :root, [data-theme] { color-scheme: light; }
   html, body { background: #fff !important; color: #000; }
-  .no-print, header.site-header, footer.site-footer { display: none !important; }
+  .no-print, header.nav, header.site-header, footer.site-footer, .skip-link { display: none !important; }
+  main { padding-top: 0 !important; }
 }

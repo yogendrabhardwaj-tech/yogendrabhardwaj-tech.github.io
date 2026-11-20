@@ -6,10 +6,10 @@ export const site = {
   name: 'Yogendra K. Bhardwaj',
   shortName: 'Yogendra Bhardwaj',
   role: 'AI & Data Solutions Architect',
-  headline: 'Agentic AI for Regulated Industries',
-  tagline: 'Agentic AI that passes the audit.',
+  headline: 'Enterprise AI Across Industries',
+  tagline: 'Enterprise AI you can trust.',
   description:
-    'Yogendra K. Bhardwaj architects production generative AI and multi-agent systems for regulated life-sciences and financial-services enterprises, built on 18 years of data engineering at Accenture.',
+    'Yogendra K. Bhardwaj architects production AI agents, assistants and data platforms for enterprises in banking, insurance, life sciences, public transportation and manufacturing — built on 18 years of delivery at Accenture.',
   location: 'Wilmington, DE, United States',
   email: 'yogendrabhardwaj@outlook.com',
   linkedin: 'https://www.linkedin.com/in/yogendrabhardwaj/',
@@ -20,9 +20,53 @@ export const metrics = [
   { value: '18', unit: 'yrs', label: 'Enterprise delivery at Accenture' },
   { value: '200+', unit: '', label: 'Service reps on a grounded RAG assistant' },
   { value: '15→5', unit: 'days', label: 'Sprint planning with an MCP-driven agent' },
-  { value: '50%', unit: '', label: 'Faster build cycles via AI forward engineering' },
   { value: '5,000+', unit: '', label: 'Users on a core banking platform I led' },
+  { value: '8', unit: '', label: 'Industries delivered in' },
   { value: '4×', unit: '', label: 'Microsoft Azure certified' },
+];
+
+// Industries delivered in — shown on the home page and résumé.
+export const industries = [
+  {
+    icon: 'bank', name: 'Banking & lending',
+    text: 'Credit unions and banks: certificates of deposit, loan and home-loan processing, member service.',
+    proof: '5,000+ users · loan cycle −30–40%', href: '/work/core-banking-loan-processing/',
+  },
+  {
+    icon: 'umbrella', name: 'Insurance',
+    text: 'Enterprise applications, data integration and process automation for insurance operations.',
+    proof: '', href: '',
+  },
+  {
+    icon: 'flask', name: 'Pharma & life sciences',
+    text: 'Clinical trials, eDocs and regulatory submissions — and today, agentic AI for drug discovery.',
+    proof: 'Agentic R&D platform · indexing −35%', href: '/work/agentic-drug-discovery/',
+  },
+  {
+    icon: 'train', name: 'Public transportation',
+    text: 'Data and analytics for a 2,000+ asset fleet: asset health, maintenance KPIs and cost tracking.',
+    proof: '2,000+ assets · 2,000+ staff', href: '/work/transit-predictive-maintenance/',
+  },
+  {
+    icon: 'gear', name: 'Enterprise asset management',
+    text: 'IoT sensor ingestion and predictive maintenance, so assets are serviced before they fail.',
+    proof: 'IoT → Databricks → Power BI', href: '/work/transit-predictive-maintenance/',
+  },
+  {
+    icon: 'factory', name: 'Manufacturing',
+    text: 'Plant inspection and service workflows — digital checklists, inspection records and follow-up actions.',
+    proof: '', href: '',
+  },
+  {
+    icon: 'wrench', name: 'Service & field support',
+    text: 'Automated work orders, technician dispatch and pre-visit checklists with ServiceNow and Workday.',
+    proof: 'Better first-time fix rates', href: '/work/transit-predictive-maintenance/',
+  },
+  {
+    icon: 'chart', name: 'Sales & customer engagement',
+    text: 'CRM and customer-engagement platforms on Dynamics 365 and the Power Platform.',
+    proof: '', href: '',
+  },
 ];
 
 export const platforms = [
@@ -99,7 +143,7 @@ return answer_with_citations(query, docs)`,
     points: [
       'Azure Data Factory, Databricks, Synapse, Data Lake, Snowflake',
       'IoT ingestion and predictive-maintenance analytics',
-      'Legacy-to-cloud migration under 21 CFR Part 11',
+      'Legacy-to-cloud migration across banking, pharma and transit',
       'AI-assisted reverse engineering of legacy codebases',
     ],
     flow: ['Legacy / sensors', 'Ingest · ADF', 'Databricks', 'Data Lake', 'BI · RAG'],
@@ -119,7 +163,7 @@ result: 5+ legacy apps documented, −30% analyst effort`,
 export const principles = [
   {
     title: 'Guardrails first',
-    body: 'Safety filters, tool allowlists and PII masking are designed in on day one — not bolted on before the audit.',
+    body: 'Safety filters, tool allowlists and PII masking are designed in on day one — not bolted on before go-live.',
   },
   {
     title: 'Eval before every release',
@@ -127,7 +171,7 @@ export const principles = [
   },
   {
     title: 'Audit trail by default',
-    body: 'Every agent tool call is logged immutably. If a regulator asks “why did it do that?”, there is an answer.',
+    body: 'Every agent tool call is logged immutably. When a customer, auditor or regulator asks “why did it do that?”, there is an answer.',
   },
   {
     title: 'Humans stay in the loop',
@@ -213,7 +257,7 @@ export const skills = [
   { group: 'AI Platforms', items: 'Azure AI Foundry (Hosted Agents), Anthropic API (Claude), Azure OpenAI, Microsoft Discovery Studio, GitHub Copilot, Copilot Studio' },
   { group: 'Data Engineering', items: 'Python, SQL, Azure Data Factory, Databricks, Synapse, Snowflake, Azure Data Lake, data modeling, IoT pipelines, Power BI' },
   { group: 'Cloud & Architecture', items: 'REST APIs, microservices, Azure Functions, Logic Apps, Service Bus, APIM, Key Vault, RBAC, managed identities, Azure DevOps' },
-  { group: 'Governance & Compliance', items: 'AI governance, GxP, FDA 21 CFR Part 11, HIPAA, PCI, audit trails & traceability' },
+  { group: 'Governance & Compliance', items: 'AI governance, responsible AI, PCI, HIPAA, GxP & FDA 21 CFR Part 11, audit trails & traceability' },
   { group: 'Modernization', items: 'Legacy platform migration, AI-assisted reverse engineering, discovery & gap analysis, cutover planning, post-migration validation' },
 ];
 
@@ -263,7 +307,7 @@ export const speakingTopics = [
   'Generative AI in the enterprise: from prompt to production',
   'Building AI agents with tools and the Model Context Protocol',
   'RAG that doesn’t hallucinate: evaluation and guardrails',
-  'Responsible AI in regulated industries (GxP, HIPAA, PCI)',
+  'Responsible AI in the enterprise: guardrails, privacy and compliance',
   'Careers in data engineering and cloud architecture',
   'From legacy to cloud: modernization with AI assistance',
 ];
@@ -273,14 +317,14 @@ export const about = {
   // Put a square photo at public/headshot.jpg and set this to '/headshot.jpg'.
   photo: '/headshot.jpg' as string,
   bio: [
-    'I help large, regulated companies — drug makers, banks and credit unions — use AI safely. I design the systems where AI assistants and agents find the right information, take actions with software tools, and stay inside the rules, with people approving the decisions that matter.',
+    'I help large enterprises — banks, insurers, pharma companies, transit agencies and manufacturers — put AI to work safely. I design the systems where AI assistants and agents find the right information, take actions with software tools, and stay inside the rules, with people approving the decisions that matter.',
     'Before AI, I spent 15 years at Accenture building data platforms, cloud systems and large migrations, so I know the plumbing that AI depends on — and how to get it through an audit.',
     'Outside client work, I publish research on securing AI systems, review research papers, am writing a book on AI, and volunteer as a guest lecturer for college students.',
   ],
   facts: [
     { label: 'Role', value: 'AI & Data Solutions Architect, Accenture' },
     { label: 'Experience', value: '18 years (2008 – present)' },
-    { label: 'Industries', value: 'Pharma & life sciences · Financial services · Public transport' },
+    { label: 'Industries', value: 'Banking & lending · Insurance · Pharma (clinical trials, drug discovery) · Public transportation · Asset management · Manufacturing · Field service & sales' },
     { label: 'Focus', value: 'AI agents · Grounded AI assistants (RAG) · Data engineering · AI governance' },
     { label: 'Certified', value: 'Azure Solutions Architect Expert + 3 Azure certifications' },
     { label: 'Based in', value: 'Wilmington, Delaware, USA' },
@@ -310,13 +354,45 @@ export const research = {
     subtitle: '',
     status: 'In progress',
     blurb:
-      'A practitioner’s book on building AI systems that hold up in the real world — drawn from 18 years of enterprise delivery and the last few years of agentic AI in regulated industries.',
+      'A practitioner’s book on building AI systems that hold up in the real world — drawn from 18 years of enterprise delivery and the last few years of agentic AI across industries.',
   },
+  orcid: 'https://orcid.org/0009-0000-6044-4189',
   reviewing: {
-    // Add venue names, e.g. 'IEEE ICETIC 2026'. Shown only when non-empty.
-    venues: [] as string[],
     summary:
-      'I review research papers on AI, retrieval-augmented generation and multi-agent systems, bringing an industry practitioner’s view on what works in production.',
+      'I review conference papers and book chapters on AI, data and cybersecurity, bringing an industry practitioner’s view on what works in production.',
+    // Newest first. Manuscript titles are deliberately omitted: reviews are confidential.
+    records: [
+      {
+        kind: 'Conference paper review',
+        venue: 'ICDSCNC 2026',
+        venueFull: '2nd International Conference on Distributed Systems, Computer Networks and Cybersecurity',
+        organizer: 'Sri Krishna Institute of Technology, Bengaluru',
+        date: 'Aug 2026',
+        proof: 'Certificate of Appreciation — Reviewer',
+        certificate: '/certificates/icdscnc-2026-reviewer.jpg',
+        reviewType: '',
+      },
+      {
+        kind: 'Book chapter review',
+        venue: 'IGI Global Scientific Publishing',
+        venueFull: 'AI-Enabled Monitoring of Avian Influenza for Human Health and Global Preparedness',
+        organizer: 'Edited book',
+        date: 'May 2026',
+        proof: 'Reviewer certificate from the Editorial Board',
+        certificate: '',
+        reviewType: 'Double-anonymized',
+      },
+      {
+        kind: 'Book chapter review',
+        venue: 'IGI Global Scientific Publishing',
+        venueFull: 'AI-Enabled Surveillance and Control of the Nipah Virus',
+        organizer: 'Edited book',
+        date: 'May 2026',
+        proof: 'Reviewer certificate from the Editorial Board',
+        certificate: '',
+        reviewType: 'Double-anonymized',
+      },
+    ],
   },
 };
 
@@ -324,13 +400,13 @@ export const research = {
 export const academicProfile = {
   title: 'AI & Data Solutions Architect · Researcher · Speaker',
   bioShort:
-    'Yogendra K. Bhardwaj is an AI & Data Solutions Architect at Accenture with 18 years of enterprise experience, architecting agentic AI and retrieval-augmented generation (RAG) systems for regulated life-sciences and financial-services organizations. Bhardwaj’s published research focuses on securing MCP-mediated RAG pipelines against injection.',
+    'Yogendra K. Bhardwaj is an AI & Data Solutions Architect at Accenture with 18 years of enterprise experience, architecting AI agents, retrieval-augmented generation (RAG) and data platforms for banking, insurance, life-sciences, transportation and manufacturing organizations. Bhardwaj’s published research focuses on securing MCP-mediated RAG pipelines against injection.',
   bioLong:
-    'Yogendra K. Bhardwaj is an AI & Data Solutions Architect at Accenture with 18 years of experience delivering enterprise data and AI platforms. Currently leading agentic AI architecture for drug discovery on Microsoft Discovery Studio, Bhardwaj co-engineers with Microsoft product teams on Azure AI Foundry Hosted Agents, Claude and GraphRAG. Earlier work includes a grounded RAG assistant used by 200+ member-service representatives in financial services, and AI pipelines that reverse-engineer legacy codebases into specifications. The common thread is making AI trustworthy in regulated environments: guardrails, evaluation, human-in-the-loop controls and audit trails under GxP, HIPAA, FDA 21 CFR Part 11 and PCI. Bhardwaj’s research on securing Model Context Protocol (MCP)-mediated RAG pipelines against injection appeared in 2026, and a book on AI is in progress. Credentials include four Microsoft Azure certifications, among them Solutions Architect Expert. Bhardwaj also volunteers as a guest lecturer for college students.',
+    'Yogendra K. Bhardwaj is an AI & Data Solutions Architect at Accenture with 18 years of experience delivering enterprise data and AI platforms across banking, insurance, life sciences, public transportation, asset management and manufacturing. Currently leading agentic AI architecture for drug discovery on Microsoft Discovery Studio, Bhardwaj co-engineers with Microsoft product teams on Azure AI Foundry Hosted Agents, Claude and GraphRAG. Earlier work includes a grounded RAG assistant used by 200+ banking service representatives, a 5,000-user loan-processing platform, predictive maintenance and field-service automation for a 2,000-asset transit fleet, and AI pipelines that reverse-engineer legacy code into specifications. The common thread is AI that can be trusted in production: guardrails, evaluation, human-in-the-loop controls and audit trails. Bhardwaj’s research on securing Model Context Protocol (MCP)-mediated RAG pipelines appeared in 2026, a book on AI is in progress, and Bhardwaj volunteers as a guest lecturer for college students.',
   roles: [
     {
       role: 'Keynote & invited speaker',
-      detail: 'Industry keynotes, invited talks and panels on agentic AI, RAG and responsible AI in regulated industries.',
+      detail: 'Industry keynotes, invited talks and panels on agentic AI, RAG and responsible AI in the enterprise.',
     },
     {
       role: 'Technical program committee & reviewer',
@@ -348,7 +424,7 @@ export const academicProfile = {
     },
     {
       title: 'Agentic AI that passes the audit',
-      abstract: 'Guardrails, evaluation gates, human-in-the-loop approval and immutable audit trails for agents in GxP, HIPAA and PCI environments.',
+      abstract: 'Guardrails, evaluation gates, human-in-the-loop approval and immutable audit trails for agents in banking, insurance and life sciences.',
     },
     {
       title: 'Grounded RAG in production: answers that cite — or decline',
@@ -361,9 +437,8 @@ export const academicProfile = {
   ],
   credentials: [
     '18 years at Accenture; Agentic AI Technical Architect co-engineering with Microsoft product teams',
-    'Published 2026: securing MCP-mediated RAG pipelines (Guru framework)',
     'Microsoft Azure Solutions Architect Expert, AI Engineer, Data Engineer, Data Analyst',
     'MIT Professional Education — Data & Technical Architect; Stanford / DeepLearning.AI — Machine Learning',
-    'Delivered under GxP, HIPAA, FDA 21 CFR Part 11 and PCI',
+    'Industries: banking, insurance, pharma, public transportation, asset management, manufacturing',
   ],
 };

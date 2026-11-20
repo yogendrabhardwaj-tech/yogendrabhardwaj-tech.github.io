@@ -2,7 +2,7 @@
 import { Code } from 'astro:components';
 import Base from '../layouts/Base.astro';
 import TracePanel from '../components/TracePanel.astro';
-import { site, metrics, platforms, pillars, principles, research, about } from '../data/profile';
+import { site, metrics, platforms, pillars, principles, research, about, industries } from '../data/profile';
 import { getWork } from '../lib/content';
 import '../styles/home.css';
 
@@ -19,11 +19,21 @@ const why = [
 ];
 
 const steps = [
-  { n: 1, title: 'Discover & assess', text: 'Map the use case, data, risks and the regulatory controls that apply — GxP, HIPAA, 21 CFR Part 11, PCI.', tag: 'workshops' },
+  { n: 1, title: 'Discover & assess', text: 'Map the use case, data, risks and the controls that apply — from privacy and PCI to GxP where relevant.', tag: 'workshops' },
   { n: 2, title: 'Architect with guardrails', text: 'Design agents, retrieval and tools with RBAC, PII masking, approval gates and audit logging built in.', tag: 'architecture' },
   { n: 3, title: 'Deliver & evaluate', text: 'Ship behind an eval gate — golden sets, groundedness checks and human review before every release.', tag: 'release gate' },
 ];
 
+const indIcons: Record<string, string> = {
+  bank: '<path d="M3 10l9-6 9 6"/><path d="M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18"/>',
+  umbrella: '<path d="M3 12a9 9 0 0118 0z"/><path d="M12 12v6a2 2 0 004 0"/>',
+  flask: '<path d="M9 3h6M10 3v6L4.5 18.5A2 2 0 006.2 21h11.6a2 2 0 001.7-2.5L14 9V3"/><path d="M7 15h10"/>',
+  train: '<rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l-2-4M15 21l2-4"/><circle cx="9" cy="14" r=".5"/><circle cx="15" cy="14" r=".5"/>',
+  gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+  factory: '<path d="M3 21V10l6 4V10l6 4V6l6-3v18z"/><path d="M7 17h2M12 17h2M17 17h1"/>',
+  wrench: '<path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/>',
+  chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+};
 const icons: Record<string, string> = {
   shield: '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/>',
   gauge: '<path d="M4 15a8 8 0 1116 0"/><path d="M12 15l4-5"/>',
@@ -55,9 +65,9 @@ const icons: Record<string, string> = {
           <span aria-hidden="true">→</span>
         </a>
 
-        <h1 class="hero-title">Agentic AI that passes the audit.</h1>
+        <h1 class="hero-title">Enterprise AI you can trust.</h1>
         <p class="hero-sub">
-          I architect AI agents and assistants for regulated life-sciences and financial-services enterprises —{' '}<a href="#build"><u>grounded</u></a>,{' '}<a href="#build"><u>governed</u></a>, and{' '}<a href="#build"><u>audited</u></a>{' '}from day one.
+          I architect AI agents, assistants and data platforms for banking, insurance, life sciences, transportation and manufacturing —{' '}<a href="#build"><u>grounded</u></a>,{' '}<a href="#build"><u>governed</u></a>, and{' '}<a href="#build"><u>built for production</u></a>.
         </p>
 
         <div class="hero-cta">
@@ -73,8 +83,8 @@ const icons: Record<string, string> = {
 
         <ul class="stat-chips" aria-label="Highlights">
           <li><strong>18 yrs</strong> enterprise delivery</li>
+          <li><strong>8</strong> industries</li>
           <li><strong>4×</strong> Azure certified</li>
-          <li><strong>200+</strong> users on grounded RAG</li>
         </ul>
       </div>
     </section>
@@ -90,11 +100,39 @@ const icons: Record<string, string> = {
       </div>
     </section>
 
+    <!-- ── Industries ─────────────────────────────────────── -->
+    <section class="sec industries" id="industries">
+      <div class="container">
+        <h2 class="sec-title center">Industries I’ve delivered in</h2>
+        <p class="sec-sub center">Eighteen years across eight industries — the domain knowledge that makes enterprise AI land.</p>
+        <ul class="ind-grid">
+          {industries.map((ind, i) => (
+            <li style={`--hue:${i}`}>
+              {ind.href ? (
+                <a class="ind" href={ind.href}>
+                  <span class="why-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={indIcons[ind.icon]} /></span>
+                  <h3>{ind.name}</h3>
+                  <p>{ind.text}</p>
+                  {ind.proof && <span class="ind-proof mono">{ind.proof}</span>}
+                </a>
+              ) : (
+                <div class="ind">
+                  <span class="why-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={indIcons[ind.icon]} /></span>
+                  <h3>{ind.name}</h3>
+                  <p>{ind.text}</p>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
     <!-- ── Tabs ───────────────────────────────────────────── -->
     <section class="sec" id="build">
       <div class="container">
         <h2 class="sec-title center">What I build</h2>
-        <p class="sec-sub center">Three layers of AI that hold up in production — and in front of an auditor.</p>
+        <p class="sec-sub center">Three layers of AI that hold up in production — whatever the industry.</p>
 
         <div class="u-tabs" role="tablist" aria-label="Capabilities" data-utabs>
           {pillars.map((p, i) => (
@@ -131,8 +169,8 @@ const icons: Record<string, string> = {
     <!-- ── Proof band ─────────────────────────────────────── -->
     <section class="sec proof">
       <div class="container">
-        <h2 class="sec-title center">Proven in regulated delivery</h2>
-        <p class="sec-sub center">Eighteen years at Accenture — from .NET and data platforms to multi-agent systems.</p>
+        <h2 class="sec-title center">Proven across industries</h2>
+        <p class="sec-sub center">Eighteen years at Accenture — from .NET and data platforms to multi-agent systems, in banking, insurance, pharma, transit and manufacturing.</p>
         <div class="proof-grid">
           {metrics.map((m) => (
             <div class="proof-item">
@@ -210,7 +248,13 @@ const icons: Record<string, string> = {
         <div class="r-copy">
           <span class="eyebrow">Research &amp; impact</span>
           <h2 class="sec-title">Practitioner research, and giving it back.</h2>
-          <p class="sec-sub">Published work on securing AI systems, a book on AI in progress, paper reviewing, and volunteer teaching for college students.</p>
+          <p class="sec-sub">Published work on securing AI systems, peer review for conferences and academic publishers, a book on AI in progress, and volunteer teaching for college students.</p>
+          <a class="reviewer-row" href="/research/#peer-review">
+            <span class="mono rr-label">Peer reviewer for</span>
+            <span class="rr-chip">ICDSCNC 2026</span>
+            <span class="rr-chip">IGI Global · 2 book chapters</span>
+            <span aria-hidden="true">→</span>
+          </a>
           <div class="hero-cta left">
             <a class="pill pill-solid" href="/research/">Research &amp; impact</a>
             <a class="pill pill-outline" href="/research/profile/">Speaker profile</a>
@@ -239,7 +283,7 @@ const icons: Record<string, string> = {
     <!-- ── Contact with bars ──────────────────────────────── -->
     <section class="cta" id="contact">
       <div class="container cta-inner">
-        <h2 class="cta-title">Building agents for a regulated business?</h2>
+        <h2 class="cta-title">Bringing AI into your enterprise?</h2>
         <p class="hero-sub">Architecture, delivery, speaking invitations, program committees or advisory roles — let’s talk.</p>
         <div class="hero-cta">
           <a class="pill pill-solid lg" href={`mailto:${site.email}`}>Email me</a>
