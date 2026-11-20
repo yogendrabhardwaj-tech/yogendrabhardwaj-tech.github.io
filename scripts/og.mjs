@@ -48,7 +48,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
   <text x="72" y="326" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="64" letter-spacing="-2" fill="#ffffff">you can</text>
   <text x="72" y="402" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="64" letter-spacing="-2" fill="#ffffff">trust.</text>
   <text x="72" y="470" font-family="Helvetica, Arial, sans-serif" font-size="21" fill="#b8bfcc">AI agents, RAG &amp; data platforms · banking, insurance,</text>
-  <text x="72" y="500" font-family="Helvetica, Arial, sans-serif" font-size="21" fill="#b8bfcc">pharma, transit, manufacturing · 18 years at Accenture</text>
+  <text x="72" y="500" font-family="Helvetica, Arial, sans-serif" font-size="21" fill="#b8bfcc">pharma, transit, manufacturing · 18 years of delivery</text>
   ${trace}
   <text x="${tx}" y="${ty + 7 * 40 + 14}" font-family="Menlo, monospace" font-size="15" fill="#fde047">✓ grounded  ✓ approved  ✓ audited</text>
   <line x1="72" y1="558" x2="1128" y2="558" stroke="#1f2430"/>

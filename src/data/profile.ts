@@ -9,7 +9,7 @@ export const site = {
   headline: 'Enterprise AI Across Industries',
   tagline: 'Enterprise AI you can trust.',
   description:
-    'Yogendra K. Bhardwaj architects production AI agents, assistants and data platforms for enterprises in banking, insurance, life sciences, public transportation and manufacturing — built on 18 years of delivery at Accenture.',
+    'Yogendra K. Bhardwaj architects production AI agents, assistants and data platforms for enterprises in banking, insurance, life sciences, public transportation and manufacturing — built on 18 years of enterprise delivery.',
   location: 'Wilmington, DE, United States',
   email: 'yogendrabhardwaj@outlook.com',
   linkedin: 'https://www.linkedin.com/in/yogendrabhardwaj/',
@@ -17,7 +17,7 @@ export const site = {
 };
 
 export const metrics = [
-  { value: '18', unit: 'yrs', label: 'Enterprise delivery at Accenture' },
+  { value: '18', unit: 'yrs', label: 'Years of enterprise delivery' },
   { value: '200+', unit: '', label: 'Service reps on a grounded RAG assistant' },
   { value: '15→5', unit: 'days', label: 'Sprint planning with an MCP-driven agent' },
   { value: '5,000+', unit: '', label: 'Users on a core banking platform I led' },
@@ -182,7 +182,7 @@ export const principles = [
 export const experience = [
   {
     role: 'Agentic AI Technical Architect',
-    org: 'Accenture · Microsoft Discovery Studio',
+    org: 'Microsoft Discovery Studio',
     period: 'Feb 2026 – Present',
     sector: 'Life Sciences · Drug Discovery',
     summary:
@@ -196,7 +196,7 @@ export const experience = [
   },
   {
     role: 'Solution Architect & AI Delivery Lead',
-    org: 'Accenture',
+    org: '',
     period: 'Oct 2023 – Jan 2026',
     sector: 'Financial Services · Credit Unions & Banking',
     summary:
@@ -212,7 +212,7 @@ export const experience = [
   },
   {
     role: 'Technical Architect, Clinical Trial & eDocs',
-    org: 'Accenture',
+    org: '',
     period: 'Apr 2019 – Sep 2023',
     sector: 'Life Sciences · Clinical Operations',
     summary:
@@ -225,7 +225,7 @@ export const experience = [
   },
   {
     role: 'Data Engineer & Application Development Lead',
-    org: 'Accenture',
+    org: '',
     period: 'Aug 2015 – Mar 2019',
     sector: 'Public Transportation · Asset Management',
     summary:
@@ -234,7 +234,7 @@ export const experience = [
   },
   {
     role: 'Clinical Application Migration Lead & SharePoint Architect',
-    org: 'Accenture',
+    org: '',
     period: 'Jan 2012 – Jul 2015',
     sector: 'Clinical & Enterprise Platforms',
     summary:
@@ -243,7 +243,7 @@ export const experience = [
   },
   {
     role: 'Sr. Software Engineer & Team Lead',
-    org: 'Accenture India',
+    org: '',
     period: 'Apr 2008 – Dec 2011',
     sector: 'Enterprise Application Development',
     summary:
@@ -421,9 +421,9 @@ export const research = {
 export const academicProfile = {
   title: 'AI & Data Solutions Architect · Researcher · Speaker',
   bioShort:
-    'Yogendra K. Bhardwaj is an AI & Data Solutions Architect at Accenture with 18 years of enterprise experience, architecting AI agents, retrieval-augmented generation (RAG) and data platforms for banking, insurance, life-sciences, transportation and manufacturing organizations. Bhardwaj’s published research focuses on securing MCP-mediated RAG pipelines against injection.',
+    'Yogendra K. Bhardwaj is an AI & Data Solutions Architect with 18 years of enterprise experience, architecting AI agents, retrieval-augmented generation (RAG) and data platforms for banking, insurance, life-sciences, transportation and manufacturing organizations. Bhardwaj’s published research focuses on securing MCP-mediated RAG pipelines against injection.',
   bioLong:
-    'Yogendra K. Bhardwaj is an AI & Data Solutions Architect at Accenture with 18 years of experience delivering enterprise data and AI platforms across banking, insurance, life sciences, public transportation, asset management and manufacturing. Currently leading agentic AI architecture for drug discovery on Microsoft Discovery Studio, Bhardwaj co-engineers with Microsoft product teams on Azure AI Foundry Hosted Agents, Claude and GraphRAG. Earlier work includes a grounded RAG assistant used by 200+ banking service representatives, a 5,000-user loan-processing platform, predictive maintenance and field-service automation for a 2,000-asset transit fleet, and AI pipelines that reverse-engineer legacy code into specifications. The common thread is AI that can be trusted in production: guardrails, evaluation, human-in-the-loop controls and audit trails. Bhardwaj’s research on securing Model Context Protocol (MCP)-mediated RAG pipelines appeared in 2026, a book on AI is in progress, and Bhardwaj volunteers as a guest lecturer for college students.',
+    'Yogendra K. Bhardwaj is an AI & Data Solutions Architect with 18 years of experience delivering enterprise data and AI platforms across banking, insurance, life sciences, public transportation, asset management and manufacturing. Currently leading agentic AI architecture for drug discovery on Microsoft Discovery Studio, Bhardwaj co-engineers with Microsoft product teams on Azure AI Foundry Hosted Agents, Claude and GraphRAG. Earlier work includes a grounded RAG assistant used by 200+ banking service representatives, a 5,000-user loan-processing platform, predictive maintenance and field-service automation for a 2,000-asset transit fleet, and AI pipelines that reverse-engineer legacy code into specifications. The common thread is AI that can be trusted in production: guardrails, evaluation, human-in-the-loop controls and audit trails. Bhardwaj’s research on securing Model Context Protocol (MCP)-mediated RAG pipelines appeared in 2026, a book on AI is in progress, and Bhardwaj volunteers as a guest lecturer for college students.',
   roles: [
     {
       role: 'Keynote & invited speaker',
@@ -457,7 +457,7 @@ export const academicProfile = {
     },
   ],
   credentials: [
-    '18 years at Accenture; Agentic AI Technical Architect co-engineering with Microsoft product teams',
+    '18 years of enterprise delivery; Agentic AI Technical Architect co-engineering with Microsoft product teams',
     'Microsoft Certified Trainer (2021–2024) and Certified Professional (MCP); Azure AI Engineer, Data Engineer, Power BI Data Analyst (earned 2021–22)',
     'MIT Professional Education — Data & Technical Architect; Stanford / DeepLearning.AI — Machine Learning',
     'Industries: banking, insurance, pharma, public transportation, asset management, manufacturing',

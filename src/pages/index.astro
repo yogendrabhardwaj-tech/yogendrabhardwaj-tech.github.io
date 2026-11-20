@@ -80,7 +80,7 @@ const icons: Record<string, string> = {
         <div class="status mono">
           <span class="status-dot" aria-hidden="true"></span>
           <span class="muted-2">now</span>
-          Agentic AI Technical Architect · Microsoft Discovery Studio · Accenture
+          Agentic AI Technical Architect · Microsoft Discovery Studio
         </div>
 
         <ul class="stat-chips" aria-label="Highlights">
@@ -181,7 +181,7 @@ const icons: Record<string, string> = {
     <section class="sec proof">
       <div class="container">
         <h2 class="sec-title center">Proven across industries</h2>
-        <p class="sec-sub center">Eighteen years at Accenture — from .NET and data platforms to multi-agent systems, in banking, insurance, pharma, transit and manufacturing.</p>
+        <p class="sec-sub center">Eighteen years of enterprise delivery — from .NET and data platforms to multi-agent systems, in banking, insurance, pharma, transit and manufacturing.</p>
         <div class="proof-grid">
           {metrics.map((m) => (
             <div class="proof-item">
@@ -325,7 +325,7 @@ const icons: Record<string, string> = {
         <img src="/headshot.jpg" alt={`Portrait of ${site.name}`} width="132" height="132" />
         <div>
           <p class="about-quote">“{about.bio[0]}”</p>
-          <p class="about-by mono">{site.name} · {site.role}</p>
+          <p class="about-by mono">{site.name} · {about.facts.find((f) => f.label === 'Role')?.value ?? site.role}</p>
         </div>
       </div>
     </section>

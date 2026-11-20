@@ -26,7 +26,7 @@ const sessions = (await getSessions()).filter((s) => !s.data.placeholder);
     <section class="r-sec">
       <h2 class="r-h">Summary</h2>
       <p>
-        AI and data architect with 18 years at Accenture across banking, insurance, life sciences, public transportation,
+        AI and data architect with 18 years of enterprise delivery across banking, insurance, life sciences, public transportation,
         asset management and manufacturing, and 3+ years leading generative and agentic AI delivery. Designs LLM systems end to end: RAG with hybrid vector and structured
         retrieval, GraphRAG knowledge bases, and multi-agent orchestration with tool calling, human-in-the-loop controls,
         guardrails and audit trails — including under PCI, HIPAA, GxP and FDA 21 CFR Part 11 where required. Built on hands-on data
@@ -40,7 +40,7 @@ const sessions = (await getSessions()).filter((s) => !s.data.placeholder);
       {experience.map((e) => (
         <div class="job">
           <div class="job-head">
-            <h3>{e.role} <span class="org">· {e.org}</span></h3>
+            <h3>{e.role}{e.org && <span class="org"> · {e.org}</span>}</h3>
             <span class="mono period">{e.period}</span>
           </div>
           <p class="sector">{e.sector}</p>
