@@ -2,11 +2,13 @@
 import { Code } from 'astro:components';
 import Base from '../layouts/Base.astro';
 import TracePanel from '../components/TracePanel.astro';
-import { site, metrics, platforms, pillars, principles, research, about, industries } from '../data/profile';
+import { site, metrics, platforms, pillars, principles, research, about, industries, msCerts, credlyProfile } from '../data/profile';
 import { getWork } from '../lib/content';
 import '../styles/home.css';
 
 const work = (await getWork()).slice(0, 3);
+const latest = [...msCerts].filter((c) => c.earned && c.badge).sort((a, b) => b.earned.localeCompare(a.earned))[0];
+const ym = (v: string) => new Date(`${v}-01T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
 const pub = research.publications[0];
 
 const why = [
@@ -84,8 +86,17 @@ const icons: Record<string, string> = {
         <ul class="stat-chips" aria-label="Highlights">
           <li><strong>18 yrs</strong> enterprise delivery</li>
           <li><strong>8</strong> industries</li>
-          <li><strong>4×</strong> Azure certified</li>
+          <li><strong>Microsoft</strong> Certified Trainer · Professional</li>
         </ul>
+
+        <a class="latest-badge" href={latest.verify} target="_blank" rel="noopener" aria-label={`Latest badge: ${latest.name}, earned ${ym(latest.earned)} — verify on Credly`}>
+          <img src={latest.badge} alt="" width="64" height="64" />
+          <span class="lb-text">
+            <span class="lb-kicker mono"><span class="lb-dot" aria-hidden="true"></span>Latest badge · {ym(latest.earned)}</span>
+            <strong>{latest.name}</strong>
+            <span class="lb-sub">{latest.kind === 'Microsoft badge' ? 'Microsoft' : latest.kind} · Verify on Credly ↗</span>
+          </span>
+        </a>
       </div>
     </section>
 
@@ -178,6 +189,45 @@ const icons: Record<string, string> = {
               <span class="proof-l">{m.label}</span>
             </div>
           ))}
+        </div>
+
+        <div class="certs" id="certifications">
+          <div class="certs-head">
+            <div>
+              <h3 class="certs-title">Microsoft credentials</h3>
+              <p class="certs-sub">{msCerts.length} Microsoft credentials — badges link to Credly for verification, shown with the dates earned and held.</p>
+            </div>
+            <a class="certs-all mono" href={credlyProfile} target="_blank" rel="noopener">All badges on Credly ↗</a>
+          </div>
+          <ul class="cert-grid">
+            {msCerts.map((c) => {
+              const Tag = c.verify ? 'a' : 'div';
+              const linkProps = c.verify ? { href: c.verify, target: '_blank', rel: 'noopener', 'aria-label': `${c.name} — verify` } : {};
+              const dates = c.until
+                ? `${ym(c.earned).split(' ')[1]} – ${c.until}`
+                : c.expired
+                  ? `${ym(c.earned)} – ${ym(c.expired)}`
+                  : c.earned
+                    ? `Earned ${ym(c.earned)}`
+                    : '';
+              return (
+                <li>
+                  <Tag class:list={['cert', { lapsed: !!c.expired }]} {...linkProps}>
+                    {c.badge ? (
+                      <img class="cert-badge" src={c.badge} alt="" width="96" height="96" loading="lazy" />
+                    ) : (
+                      <span class="cert-emblem" aria-hidden="true"><span>{c.emblem}</span></span>
+                    )}
+                    <span class="cert-tier mono">{c.kind}</span>
+                    <strong class="cert-name">{c.name}</strong>
+                    {dates && <span class="cert-dates mono">{dates}</span>}
+                    <span class:list={['cert-status', 'mono', c.expired ? 'is-expired' : 'is-held']}>{c.expired ? 'Expired' : c.until ? 'Held 3 years' : 'Earned'}</span>
+                    <span class="cert-verify mono">{c.verify ? 'Verify ↗' : 'Microsoft legacy program'}</span>
+                  </Tag>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </section>

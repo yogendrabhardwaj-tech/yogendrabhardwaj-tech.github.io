@@ -22,7 +22,7 @@ export const metrics = [
   { value: '15→5', unit: 'days', label: 'Sprint planning with an MCP-driven agent' },
   { value: '5,000+', unit: '', label: 'Users on a core banking platform I led' },
   { value: '8', unit: '', label: 'Industries delivered in' },
-  { value: '4×', unit: '', label: 'Microsoft Azure certified' },
+  { value: '3×', unit: '', label: 'Microsoft Certified Trainer (2021–2024)' },
 ];
 
 // Industries delivered in — shown on the home page and résumé.
@@ -261,11 +261,32 @@ export const skills = [
   { group: 'Modernization', items: 'Legacy platform migration, AI-assisted reverse engineering, discovery & gap analysis, cutover planning, post-migration validation' },
 ];
 
+// Microsoft credentials shown as badges on the home page — all verifiable on Credly.
+// Dates are ISO months; `expired` is set when the credential has lapsed.
+const credly = (id: string) => `https://www.credly.com/badges/${id}/public_url`;
+export const credlyProfile = 'https://www.credly.com/users/yogendrabhardwaj/badges';
+export const msCerts = [
+  { name: 'Agentic AI Hackathon — Proficient', kind: 'Microsoft badge', badge: '/badges/agentic-ai-hackathon.png', earned: '2026-11', expired: '', verify: credly('44e3ebb9-9de5-47b5-ad93-8937bcb3b56d') },
+  { name: 'Microsoft Certified Trainer', kind: '3 consecutive years', badge: '/badges/mct-2023-2024.png', earned: '2021-07', until: '2024', expired: '', verify: credly('99263ddf-a8d5-4e11-868b-39bfcede0965') },
+  // Legacy Microsoft program — not on Credly. Add `earned` (YYYY-MM) and a Microsoft Learn transcript link in `verify` when available.
+  { name: 'Microsoft Certified Professional', kind: 'MCP', badge: '', emblem: 'MCP', earned: '', expired: '', verify: '' },
+  { name: 'Azure AI Engineer Associate', kind: 'Certification', badge: '/badges/azure-ai-engineer.png', earned: '2022-08', expired: '2024-08', verify: credly('b3362b37-241c-48f2-9b5f-183b8c22f438') },
+  { name: 'Azure Data Engineer Associate', kind: 'Certification', badge: '/badges/azure-data-engineer.png', earned: '2021-06', expired: '2024-06', verify: credly('8db54459-ee62-45cd-8fb1-c7ae13570ded') },
+  { name: 'Power BI Data Analyst Associate', kind: 'Certification', badge: '/badges/power-bi-data-analyst.png', earned: '2021-06', expired: '2024-06', verify: credly('43ecf7f3-3c6a-4dad-a17b-8af382ad807c') },
+  { name: 'Architecting Microsoft Azure Solutions', kind: 'Exam 535', badge: '/badges/exam-535.png', earned: '2018-09', expired: '', verify: credly('28731581-2347-4e2d-a031-6ba795b36750') },
+  { name: 'Azure AI Fundamentals', kind: 'Certification', badge: '/badges/azure-ai-fundamentals.png', earned: '2021-11', expired: '', verify: credly('348cc708-cae9-4e1b-943a-d5b5bb5c1a33') },
+  { name: 'Security, Compliance & Identity Fundamentals', kind: 'Certification', badge: '/badges/sci-fundamentals.png', earned: '2021-07', expired: '', verify: credly('ee7aa318-3ef4-4eaf-8332-bf588a4e17d0') },
+];
+
 export const certifications = [
-  'Azure Solutions Architect Expert — Microsoft',
-  'Azure AI Engineer Associate — Microsoft',
-  'Azure Data Engineer Associate — Microsoft',
-  'Azure Data Analyst Associate — Microsoft',
+  'Microsoft Certified Trainer — Microsoft (2021–2024)',
+  'Microsoft Certified Professional (MCP) — Microsoft',
+  'Azure AI Engineer Associate — Microsoft (2022–2024)',
+  'Azure Data Engineer Associate — Microsoft (2021–2024)',
+  'Power BI Data Analyst Associate — Microsoft (2021–2024)',
+  'Agentic AI Hackathon — Proficient — Microsoft (2026)',
+  'Exam 535: Architecting Microsoft Azure Solutions — Microsoft (2018)',
+  'Azure AI Fundamentals; Security, Compliance & Identity Fundamentals — Microsoft (2021)',
   'Data Architect & Technical Architect — MIT Professional Education',
   'Machine Learning Specialization — Stanford / DeepLearning.AI',
 ];
@@ -326,7 +347,7 @@ export const about = {
     { label: 'Experience', value: '18 years (2008 – present)' },
     { label: 'Industries', value: 'Banking & lending · Insurance · Pharma (clinical trials, drug discovery) · Public transportation · Asset management · Manufacturing · Field service & sales' },
     { label: 'Focus', value: 'AI agents · Grounded AI assistants (RAG) · Data engineering · AI governance' },
-    { label: 'Certified', value: 'Azure Solutions Architect Expert + 3 Azure certifications' },
+    { label: 'Microsoft', value: 'Certified Trainer 2021–2024 · Certified Professional (MCP) · Azure AI Engineer, Azure Data Engineer and Power BI Data Analyst certifications (earned 2021–2022)' },
     { label: 'Based in', value: 'Wilmington, Delaware, USA' },
     { label: 'Open to', value: 'AI architecture leadership roles, advisory work and speaking' },
   ],
@@ -437,7 +458,7 @@ export const academicProfile = {
   ],
   credentials: [
     '18 years at Accenture; Agentic AI Technical Architect co-engineering with Microsoft product teams',
-    'Microsoft Azure Solutions Architect Expert, AI Engineer, Data Engineer, Data Analyst',
+    'Microsoft Certified Trainer (2021–2024) and Certified Professional (MCP); Azure AI Engineer, Data Engineer, Power BI Data Analyst (earned 2021–22)',
     'MIT Professional Education — Data & Technical Architect; Stanford / DeepLearning.AI — Machine Learning',
     'Industries: banking, insurance, pharma, public transportation, asset management, manufacturing',
   ],

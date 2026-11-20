@@ -53,7 +53,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
   <text x="${tx}" y="${ty + 7 * 40 + 14}" font-family="Menlo, monospace" font-size="15" fill="#fde047">✓ grounded  ✓ approved  ✓ audited</text>
   <line x1="72" y1="558" x2="1128" y2="558" stroke="#1f2430"/>
   <text x="72" y="590" font-family="Menlo, monospace" font-size="16" fill="#8b93a5">yogendrabhardwaj.runs-on.dev</text>
-  <text x="1128" y="590" text-anchor="end" font-family="Menlo, monospace" font-size="16" fill="#8b93a5">8 industries · 4× Azure certified</text>
+  <text x="1128" y="590" text-anchor="end" font-family="Menlo, monospace" font-size="16" fill="#8b93a5">8 industries · Microsoft Certified Trainer</text>
 </svg>`;
 
 await sharp(Buffer.from(svg)).png().toFile(new URL('../public/og.png', import.meta.url).pathname);
