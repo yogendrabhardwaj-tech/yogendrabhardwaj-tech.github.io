@@ -28,7 +28,7 @@ const ld = {
 
 <Base title={d.title} description={d.summary} type="article" jsonLd={ld}>
   <article>
-    <header class="cs-head grid-bg">
+    <header class="cs-head bars-band">
       <div class="container narrow-wide">
         <a href="/work/" class="back mono">← All work</a>
         <span class="eyebrow">{d.sector}</span>
@@ -86,7 +86,7 @@ const ld = {
   .outcomes { border-bottom: 1px solid var(--border); background: var(--bg-elev); padding-block: 32px; }
   .outcomes dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; }
   .outcomes dl > div { display: flex; flex-direction: column-reverse; gap: 6px; border-left: 1px solid var(--border); padding-left: 16px; }
-  .outcomes dd { font-family: var(--font-display); font-size: 1.9rem; font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; }
+  .outcomes dd { font-family: var(--font-body); font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
   .outcomes dt { font-size: 0.82rem; color: var(--muted); }
 
   .body { padding-block: clamp(48px, 7vw, 80px); }
@@ -95,7 +95,7 @@ const ld = {
   .next { padding-bottom: clamp(64px, 9vw, 112px); }
   .next-card { display: grid; grid-template-columns: 1fr auto; gap: 8px 20px; align-items: center; padding: 28px 32px; }
   .next-card .eyebrow { grid-column: 1; }
-  .next-title { grid-column: 1; font-family: var(--font-display); font-size: 1.5rem; }
+  .next-title { grid-column: 1; font-family: var(--font-body); font-weight: 700; font-size: 1.5rem; }
   .go { grid-column: 2; grid-row: 1 / span 2; font-size: 1.4rem; color: var(--muted); transition: color 0.2s, transform 0.2s; }
   .next-card:hover .go { color: var(--accent); transform: translateX(4px); }
 </style>

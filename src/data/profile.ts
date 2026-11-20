@@ -275,7 +275,7 @@ export const about = {
   bio: [
     'I help large, regulated companies — drug makers, banks and credit unions — use AI safely. I design the systems where AI assistants and agents find the right information, take actions with software tools, and stay inside the rules, with people approving the decisions that matter.',
     'Before AI, I spent 15 years at Accenture building data platforms, cloud systems and large migrations, so I know the plumbing that AI depends on — and how to get it through an audit.',
-    'Outside client work, I teach: guest lectures and hands-on sessions for college students on AI, data and careers in technology.',
+    'Outside client work, I publish research on securing AI systems, review research papers, am writing a book on AI, and volunteer as a guest lecturer for college students.',
   ],
   facts: [
     { label: 'Role', value: 'AI & Data Solutions Architect, Accenture' },
@@ -285,5 +285,85 @@ export const about = {
     { label: 'Certified', value: 'Azure Solutions Architect Expert + 3 Azure certifications' },
     { label: 'Based in', value: 'Wilmington, Delaware, USA' },
     { label: 'Open to', value: 'AI architecture leadership roles, advisory work and speaking' },
+  ],
+};
+
+// Research, writing and community impact.
+export const research = {
+  scholar: 'https://scholar.google.com/citations?user=NWN975kAAAAJ&hl=en',
+  interests: ['Artificial Intelligence', 'Retrieval-Augmented Generation', 'Multi-Agent Systems', 'AI Security', 'Model Context Protocol'],
+  publications: [
+    {
+      title: 'Guarding the Gateway: Securing MCP-Mediated RAG Pipelines Against Injection with the Guru Framework',
+      authors: ['Y. K. Bhardwaj', 'P. S. Chauhan', 'P. R. Sharma'],
+      // TODO: replace with the full conference name (Scholar truncates it).
+      venue: '2026 International Conference on Emerging Trends in Information …',
+      year: 2026,
+      type: 'Conference paper',
+      tags: ['MCP', 'RAG security', 'Prompt injection'],
+      url: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=NWN975kAAAAJ&citation_for_view=NWN975kAAAAJ:u5HHmVD_uO8C',
+    },
+  ],
+  book: {
+    // Leave title empty until you are ready to announce it.
+    title: '',
+    subtitle: '',
+    status: 'In progress',
+    blurb:
+      'A practitioner’s book on building AI systems that hold up in the real world — drawn from 18 years of enterprise delivery and the last few years of agentic AI in regulated industries.',
+  },
+  reviewing: {
+    // Add venue names, e.g. 'IEEE ICETIC 2026'. Shown only when non-empty.
+    venues: [] as string[],
+    summary:
+      'I review research papers on AI, retrieval-augmented generation and multi-agent systems, bringing an industry practitioner’s view on what works in production.',
+  },
+};
+
+// One-page profile for conference committees (speaker / reviewer / advisor).
+export const academicProfile = {
+  title: 'AI & Data Solutions Architect · Researcher · Speaker',
+  bioShort:
+    'Yogendra K. Bhardwaj is an AI & Data Solutions Architect at Accenture with 18 years of enterprise experience, architecting agentic AI and retrieval-augmented generation (RAG) systems for regulated life-sciences and financial-services organizations. Bhardwaj’s published research focuses on securing MCP-mediated RAG pipelines against injection.',
+  bioLong:
+    'Yogendra K. Bhardwaj is an AI & Data Solutions Architect at Accenture with 18 years of experience delivering enterprise data and AI platforms. Currently leading agentic AI architecture for drug discovery on Microsoft Discovery Studio, Bhardwaj co-engineers with Microsoft product teams on Azure AI Foundry Hosted Agents, Claude and GraphRAG. Earlier work includes a grounded RAG assistant used by 200+ member-service representatives in financial services, and AI pipelines that reverse-engineer legacy codebases into specifications. The common thread is making AI trustworthy in regulated environments: guardrails, evaluation, human-in-the-loop controls and audit trails under GxP, HIPAA, FDA 21 CFR Part 11 and PCI. Bhardwaj’s research on securing Model Context Protocol (MCP)-mediated RAG pipelines against injection appeared in 2026, and a book on AI is in progress. Credentials include four Microsoft Azure certifications, among them Solutions Architect Expert. Bhardwaj also volunteers as a guest lecturer for college students.',
+  roles: [
+    {
+      role: 'Keynote & invited speaker',
+      detail: 'Industry keynotes, invited talks and panels on agentic AI, RAG and responsible AI in regulated industries.',
+    },
+    {
+      role: 'Technical program committee & reviewer',
+      detail: 'Reviewing papers in AI, retrieval-augmented generation, multi-agent systems and AI security — with a production-readiness lens.',
+    },
+    {
+      role: 'Industry advisor',
+      detail: 'Advisory board or industry track chair: connecting academic research with enterprise practice, and mentoring student researchers.',
+    },
+  ],
+  talks: [
+    {
+      title: 'Guarding the gateway: securing MCP-mediated RAG against injection',
+      abstract: 'How tool-connected AI systems get attacked through retrieved content and tool calls — and the layered defenses that keep them safe.',
+    },
+    {
+      title: 'Agentic AI that passes the audit',
+      abstract: 'Guardrails, evaluation gates, human-in-the-loop approval and immutable audit trails for agents in GxP, HIPAA and PCI environments.',
+    },
+    {
+      title: 'Grounded RAG in production: answers that cite — or decline',
+      abstract: 'Hybrid retrieval, golden-set evaluation and refusal routing, from a deployment serving 200+ financial-services staff.',
+    },
+    {
+      title: 'From legacy to AI-native',
+      abstract: 'Using LLMs to reverse-engineer legacy codebases into specifications and accelerate modernization.',
+    },
+  ],
+  credentials: [
+    '18 years at Accenture; Agentic AI Technical Architect co-engineering with Microsoft product teams',
+    'Published 2026: securing MCP-mediated RAG pipelines (Guru framework)',
+    'Microsoft Azure Solutions Architect Expert, AI Engineer, Data Engineer, Data Analyst',
+    'MIT Professional Education — Data & Technical Architect; Stanford / DeepLearning.AI — Machine Learning',
+    'Delivered under GxP, HIPAA, FDA 21 CFR Part 11 and PCI',
   ],
 };

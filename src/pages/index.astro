@@ -1,311 +1,282 @@
 ---
+import { Code } from 'astro:components';
 import Base from '../layouts/Base.astro';
 import TracePanel from '../components/TracePanel.astro';
-import PillarTabs from '../components/PillarTabs.astro';
-import About from '../components/About.astro';
-import WorkCard from '../components/WorkCard.astro';
-import SessionCard from '../components/SessionCard.astro';
-import { site, metrics, platforms, principles, experience, speakingTopics } from '../data/profile';
-import { getWork, getNotes, getSessions, formatDate } from '../lib/content';
+import { site, metrics, platforms, pillars, principles, research, about } from '../data/profile';
+import { getWork } from '../lib/content';
+import '../styles/home.css';
 
-const work = await getWork();
-const notes = (await getNotes()).slice(0, 3);
-const sessions = (await getSessions()).slice(0, 3);
+const work = (await getWork()).slice(0, 3);
+const pub = research.publications[0];
+
+const why = [
+  { icon: 'shield', title: principles[0].title, text: principles[0].body },
+  { icon: 'gauge', title: principles[1].title, text: principles[1].body },
+  { icon: 'log', title: principles[2].title, text: principles[2].body },
+  { icon: 'user', title: principles[3].title, text: principles[3].body },
+  { icon: 'db', title: 'Data foundations first', text: 'Fifteen years of pipelines and platforms before GenAI — so the retrieval layer is solid, not an afterthought.' },
+  { icon: 'link', title: 'Bridge to executives', text: 'Primary technical contact for client executives and Microsoft product engineering — architecture that leadership can follow.' },
+];
+
+const steps = [
+  { n: 1, title: 'Discover & assess', text: 'Map the use case, data, risks and the regulatory controls that apply — GxP, HIPAA, 21 CFR Part 11, PCI.', tag: 'workshops' },
+  { n: 2, title: 'Architect with guardrails', text: 'Design agents, retrieval and tools with RBAC, PII masking, approval gates and audit logging built in.', tag: 'architecture' },
+  { n: 3, title: 'Deliver & evaluate', text: 'Ship behind an eval gate — golden sets, groundedness checks and human review before every release.', tag: 'release gate' },
+];
+
+const icons: Record<string, string> = {
+  shield: '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/>',
+  gauge: '<path d="M4 15a8 8 0 1116 0"/><path d="M12 15l4-5"/>',
+  log: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',
+  db: '<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>',
+  link: '<path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/>',
+};
 ---
 
-<Base>
-  <!-- ── Hero ─────────────────────────────────────────────── -->
-  <section class="hero grid-bg">
-    <div class="glow" aria-hidden="true"></div>
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="dot" aria-hidden="true"></span>{site.role}</p>
-        <h1 class="display">Agentic&nbsp;AI that passes the&nbsp;audit.</h1>
-        <p class="lede">
-          I’m <strong>Yogendra Bhardwaj</strong>. I architect production generative AI and multi-agent systems for
-          regulated <strong>life-sciences</strong> and <strong>financial-services</strong> enterprises — grounded,
-          evaluated, and audit-ready from day one, built on 18 years of data engineering at Accenture.
+<Base bleed>
+  <div class="home">
+    <!-- ── Hero with vertical bars ────────────────────────── -->
+    <section class="hero">
+      <div class="bars" aria-hidden="true">
+        {Array.from({ length: 9 }, (_, i) => <span class="glint" style={`--x:${8 + i * 10.5}%;--d:${(i * 1.7) % 6}s;--w:${i % 3 === 0 ? 3 : 2}`}></span>)}
+      </div>
+      <div class="container hero-inner">
+        <a class="hero-avatar" href="#about" aria-label={`About ${site.shortName}`}>
+          <span class="ring"><img src="/headshot.jpg" alt={`Portrait of ${site.name}`} width="128" height="128" /><span class="online" aria-hidden="true"></span></span>
+          <span class="tag-card">
+            <strong>Hi, I’m Yogendra</strong>
+            <span class="mono">Wilmington, DE · open to talk</span>
+          </span>
+        </a>
+        <a class="announce" href={pub.url} target="_blank" rel="noopener">
+          <span class="announce-tag">New</span>
+          <span class="long">Published 2026 — securing MCP-mediated RAG pipelines against injection</span><span class="short">Published 2026: securing MCP-RAG pipelines</span>
+          <span aria-hidden="true">→</span>
+        </a>
+
+        <h1 class="hero-title">Agentic AI that passes the audit.</h1>
+        <p class="hero-sub">
+          I architect AI agents and assistants for regulated life-sciences and financial-services enterprises —{' '}<a href="#build"><u>grounded</u></a>,{' '}<a href="#build"><u>governed</u></a>, and{' '}<a href="#build"><u>audited</u></a>{' '}from day one.
         </p>
-        <div class="cta">
-          <a href="#work" class="btn btn-primary">View selected work <span class="arrow">→</span></a>
-          <a href="#about" class="btn">About me</a>
+
+        <div class="hero-cta">
+          <a class="pill pill-solid lg" href="#work">View selected work</a>
+          <a class="pill pill-outline lg" href="/research/profile/">Speaker profile</a>
         </div>
-        <ul class="compliance mono" aria-label="Compliance frameworks delivered under">
-          <li>GxP</li><li>HIPAA</li><li>FDA 21 CFR Part 11</li><li>PCI</li>
-        </ul>
-      </div>
-      <div class="hero-visual">
-        <TracePanel />
-        <p class="caption mono">Illustrative trace — the kind of run I design for.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- ── Proof strip ──────────────────────────────────────── -->
-  <section class="proof" aria-label="Highlights">
-    <div class="container">
-      <dl class="metrics">
-        {metrics.map((m) => (
-          <div class="metric">
-            <dt>{m.label}</dt>
-            <dd><span class="v">{m.value}</span>{m.unit && <span class="u">{m.unit}</span>}</dd>
-          </div>
-        ))}
-      </dl>
-      <div class="platforms">
-        <span class="eyebrow">Platforms I build on</span>
-        <ul>{platforms.map((p) => <li>{p}</li>)}</ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── About ────────────────────────────────────────────── -->
-  <About />
-
-  <!-- ── What I build ─────────────────────────────────────── -->
-  <section class="section" id="build">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow"><span class="num">02</span> / What I build</span>
-        <h2 class="h2">Three layers of AI that holds up in production.</h2>
-      </div>
-      <div class="reveal"><PillarTabs /></div>
-    </div>
-  </section>
-
-  <!-- ── Selected work ────────────────────────────────────── -->
-  <section class="section" id="work">
-    <div class="container">
-      <div class="head-row reveal">
-        <div class="section-head">
-          <span class="eyebrow"><span class="num">03</span> / Selected work</span>
-          <h2 class="h2">Case studies from regulated delivery.</h2>
-          <p class="muted">Client names withheld. Architectures described generically.</p>
+        <div class="status mono">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="muted-2">now</span>
+          Agentic AI Technical Architect · Microsoft Discovery Studio · Accenture
         </div>
-        <a href="/work/" class="link-arrow">All case studies <span>→</span></a>
-      </div>
-      <div class="work-grid">
-        {work.map((w, i) => (
-          <div class:list={['reveal', { wide: i < 2 }]}><WorkCard entry={w} index={i + 1} large={i < 2} /></div>
-        ))}
-      </div>
-    </div>
-  </section>
 
-  <!-- ── Principles ───────────────────────────────────────── -->
-  <section class="section principles-sec">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow"><span class="num">04</span> / How I work</span>
-        <h2 class="h2">Governance is a design input, not a review step.</h2>
-      </div>
-      <ol class="principles">
-        {principles.map((p, i) => (
-          <li class="reveal">
-            <span class="p-num mono">0{i + 1}</span>
-            <h3 class="h3">{p.title}</h3>
-            <p>{p.body}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <!-- ── Teaching ─────────────────────────────────────────── -->
-  <section class="section" id="teaching">
-    <div class="container">
-      <div class="head-row reveal">
-        <div class="section-head">
-          <span class="eyebrow"><span class="num">05</span> / Teaching &amp; speaking</span>
-          <h2 class="h2">Bringing industry AI into the classroom.</h2>
-          <p class="muted">Guest lectures and hands-on sessions for college students on generative AI, agents, data and cloud careers.</p>
-        </div>
-        <a href="/teaching/" class="link-arrow">All sessions <span>→</span></a>
-      </div>
-      {sessions.length > 0 ? (
-        <div class="three-grid">
-          {sessions.map((s) => <div class="reveal"><SessionCard entry={s} /></div>)}
-        </div>
-      ) : (
-        <ol class="topic-grid reveal">
-          {speakingTopics.map((t, i) => (
-            <li class="card"><span class="mono t-num">{String(i + 1).padStart(2, '0')}</span>{t}</li>
-          ))}
-        </ol>
-      )}
-    </div>
-  </section>
-
-  <!-- ── Timeline ─────────────────────────────────────────── -->
-  <section class="section" id="career">
-    <div class="container career">
-      <div class="section-head reveal">
-        <span class="eyebrow"><span class="num">06</span> / Career</span>
-        <h2 class="h2">From .NET to data to agents.</h2>
-        <p class="muted">Eighteen years at Accenture — every layer of the stack that today’s AI depends on.</p>
-        <a href="/resume/" class="link-arrow">Full résumé <span>→</span></a>
-      </div>
-      <ol class="timeline">
-        {experience.map((e) => (
-          <li class="reveal">
-            <span class="t-period mono">{e.period}</span>
-            <div>
-              <h3 class="t-role">{e.role}</h3>
-              <p class="t-sector">{e.sector}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <!-- ── Notes ────────────────────────────────────────────── -->
-  {notes.length > 0 && (
-    <section class="section" id="notes">
-      <div class="container">
-        <div class="head-row reveal">
-          <div class="section-head">
-            <span class="eyebrow"><span class="num">07</span> / Notes</span>
-            <h2 class="h2">Architecture notes.</h2>
-          </div>
-          <a href="/notes/" class="link-arrow">All notes <span>→</span></a>
-        </div>
-        <ul class="notes">
-          {notes.map((n) => (
-            <li class="reveal">
-              <a href={`/notes/${n.id}/`}>
-                <time class="mono" datetime={n.data.date.toISOString()}>{formatDate(n.data.date)}</time>
-                <span class="n-title">{n.data.title}{n.data.draft && <span class="placeholder-badge">Draft</span>}</span>
-                <span class="n-go" aria-hidden="true">→</span>
-              </a>
-            </li>
-          ))}
+        <ul class="stat-chips" aria-label="Highlights">
+          <li><strong>18 yrs</strong> enterprise delivery</li>
+          <li><strong>4×</strong> Azure certified</li>
+          <li><strong>200+</strong> users on grounded RAG</li>
         </ul>
       </div>
     </section>
-  )}
 
-  <!-- ── Contact ──────────────────────────────────────────── -->
-  <section class="contact grid-bg" id="contact">
-    <div class="glow" aria-hidden="true"></div>
-    <div class="container contact-inner reveal">
-      <span class="eyebrow">Get in touch</span>
-      <h2 class="display contact-title">Building agents for a regulated business?</h2>
-      <p class="lede">I’m happy to talk architecture, delivery, speaking invitations, or roles where governed AI matters.</p>
-      <div class="cta">
-        <a href={`mailto:${site.email}`} class="btn btn-primary">{site.email} <span class="arrow">→</span></a>
-        <a href={site.linkedin} class="btn" target="_blank" rel="me noopener">LinkedIn ↗</a>
-        <a href={site.github} class="btn" target="_blank" rel="me noopener">GitHub ↗</a>
+    <!-- ── Platform marquee ───────────────────────────────── -->
+    <section class="marquee" aria-label="Platforms I build on">
+      <div class="track">
+        {[0, 1].map((k) => (
+          <ul aria-hidden={k === 1 ? 'true' : undefined}>
+            {platforms.map((p) => <li>{p}</li>)}
+          </ul>
+        ))}
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- ── Tabs ───────────────────────────────────────────── -->
+    <section class="sec" id="build">
+      <div class="container">
+        <h2 class="sec-title center">What I build</h2>
+        <p class="sec-sub center">Three layers of AI that hold up in production — and in front of an auditor.</p>
+
+        <div class="u-tabs" role="tablist" aria-label="Capabilities" data-utabs>
+          {pillars.map((p, i) => (
+            <button role="tab" type="button" id={`ut-${p.id}`} aria-controls={`up-${p.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{p.label}</button>
+          ))}
+        </div>
+
+        {pillars.map((p, i) => (
+          <div class="u-panel" role="tabpanel" id={`up-${p.id}`} aria-labelledby={`ut-${p.id}`} hidden={i !== 0}>
+            <div class="u-copy">
+              <h3>{p.title}</h3>
+              <p>{p.body}</p>
+              <ul>{p.points.map((pt) => <li>{pt}</li>)}</ul>
+              <div class="u-links">
+                <a href={p.caseStudy} class="tiny-pill">Case study →</a>
+                <a href="#contact" class="tiny-link">Discuss a project →</a>
+              </div>
+            </div>
+            <div class="u-visual">
+              {i === 0 ? (
+                <TracePanel />
+              ) : (
+                <div class="code-win">
+                  <div class="code-bar"><i></i><i></i><i></i><span class="mono">{p.lang} · illustrative</span></div>
+                  <Code code={p.code} lang={p.lang as any} themes={{ light: 'github-light', dark: 'github-dark-dimmed' }} defaultColor={false} />
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── Proof band ─────────────────────────────────────── -->
+    <section class="sec proof">
+      <div class="container">
+        <h2 class="sec-title center">Proven in regulated delivery</h2>
+        <p class="sec-sub center">Eighteen years at Accenture — from .NET and data platforms to multi-agent systems.</p>
+        <div class="proof-grid">
+          {metrics.map((m) => (
+            <div class="proof-item">
+              <span class="proof-v">{m.value}<small>{m.unit}</small></span>
+              <span class="proof-l">{m.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Why ────────────────────────────────────────────── -->
+    <section class="sec">
+      <div class="container">
+        <h2 class="sec-title center">Why teams bring me in</h2>
+        <p class="sec-sub center">Governance is a design input, not a review step.</p>
+        <div class="why-grid">
+          {why.map((w, i) => (
+            <article class="why" style={`--hue:${i}`}>
+              <span class="why-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[w.icon]} />
+              </span>
+              <h3>{w.title}</h3>
+              <p>{w.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Work ───────────────────────────────────────────── -->
+    <section class="sec" id="work">
+      <div class="container">
+        <h2 class="sec-title center">Selected work</h2>
+        <p class="sec-sub center">Client names withheld. Architectures described generically.</p>
+        <div class="work-grid">
+          {work.map((w) => (
+            <a class="work" href={`/work/${w.id}/`}>
+              <span class="work-sector mono">{w.data.sector}</span>
+              <h3>{w.data.title}</h3>
+              <p>{w.data.summary}</p>
+              <div class="work-metrics">
+                {w.data.metrics.slice(0, 2).map((m) => <span><strong>{m.value}</strong> {m.label}</span>)}
+              </div>
+              <span class="work-go">Read case study →</span>
+            </a>
+          ))}
+        </div>
+        <p class="center more"><a class="tiny-link" href="/work/">All case studies →</a></p>
+      </div>
+    </section>
+
+    <!-- ── Steps ──────────────────────────────────────────── -->
+    <section class="sec">
+      <div class="container">
+        <h2 class="sec-title center">How an engagement runs</h2>
+        <p class="sec-sub center">Three steps, with governance designed in from the first workshop.</p>
+        <ol class="steps">
+          {steps.map((s, i) => (
+            <li class="step">
+              <span class="step-n">{s.n}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+              <span class="step-tag mono">{s.tag}</span>
+              {i < steps.length - 1 && <span class="step-arrow" aria-hidden="true">→</span>}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- ── Research ───────────────────────────────────────── -->
+    <section class="sec research">
+      <div class="container r-grid">
+        <div class="r-copy">
+          <span class="eyebrow">Research &amp; impact</span>
+          <h2 class="sec-title">Practitioner research, and giving it back.</h2>
+          <p class="sec-sub">Published work on securing AI systems, a book on AI in progress, paper reviewing, and volunteer teaching for college students.</p>
+          <div class="hero-cta left">
+            <a class="pill pill-solid" href="/research/">Research &amp; impact</a>
+            <a class="pill pill-outline" href="/research/profile/">Speaker profile</a>
+          </div>
+        </div>
+        <a class="paper" href={pub.url} target="_blank" rel="noopener">
+          <span class="paper-top mono">{pub.type} · {pub.year}</span>
+          <h3>{pub.title}</h3>
+          <p>{pub.authors.join(', ')}</p>
+          <div class="paper-tags">{pub.tags.map((t) => <span>{t}</span>)}</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── About strip ────────────────────────────────────── -->
+    <section class="sec about-strip" id="about">
+      <div class="container about-inner">
+        <img src="/headshot.jpg" alt={`Portrait of ${site.name}`} width="132" height="132" />
+        <div>
+          <p class="about-quote">“{about.bio[0]}”</p>
+          <p class="about-by mono">{site.name} · {site.role}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Contact with bars ──────────────────────────────── -->
+    <section class="cta" id="contact">
+      <div class="container cta-inner">
+        <h2 class="cta-title">Building agents for a regulated business?</h2>
+        <p class="hero-sub">Architecture, delivery, speaking invitations, program committees or advisory roles — let’s talk.</p>
+        <div class="hero-cta">
+          <a class="pill pill-solid lg" href={`mailto:${site.email}`}>Email me</a>
+          <a class="pill pill-outline lg" href={site.linkedin} target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div class="container foot-inner">
+        <span>© 2026 {site.name}</span>
+        <span class="muted-2">Views are my own. Client names withheld.</span>
+      </div>
+    </footer>
+  </div>
 </Base>
 
-<style>
-  /* Hero */
-  .hero { position: relative; overflow: hidden; padding-block: clamp(56px, 9vw, 112px) clamp(56px, 8vw, 96px); }
-  .glow {
-    position: absolute; inset: auto; width: 900px; height: 600px; left: 50%; top: -260px; transform: translateX(-10%);
-    background: radial-gradient(closest-side, var(--glow), transparent); pointer-events: none;
-  }
-  .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(40px, 6vw, 72px); align-items: center; }
-  .hero-copy { display: grid; gap: 26px; }
-  .hero-copy .eyebrow { color: var(--text-2); }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--verified); box-shadow: 0 0 0 4px var(--verified-soft); }
-  .lede strong { color: var(--text); font-weight: 600; }
-  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
-  .compliance { display: flex; flex-wrap: wrap; gap: 8px 18px; list-style: none; padding: 0; font-size: 0.75rem; color: var(--muted); }
-  .compliance li::before { content: '✓'; color: var(--verified); margin-right: 7px; }
-  .caption { margin-top: 12px; font-size: 0.7rem; color: var(--muted); text-align: right; }
-  @media (max-width: 980px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } }
-
-  /* Proof strip */
-  .proof { border-block: 1px solid var(--border); background: var(--bg-elev); padding-block: 40px; }
-  .metrics { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 24px; }
-  .metric { display: flex; flex-direction: column-reverse; gap: 6px; border-left: 1px solid var(--border); padding-left: 16px; }
-  .metric dt { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
-  .metric dd { display: flex; align-items: baseline; gap: 5px; }
-  .v { font-family: var(--font-display); font-size: clamp(1.7rem, 2.6vw, 2.2rem); font-weight: 500; letter-spacing: -0.02em; line-height: 1; }
-  .u { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
-  .platforms { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--border); }
-  .platforms ul { display: flex; flex-wrap: wrap; gap: 10px 28px; list-style: none; padding: 0; }
-  .platforms li { font-weight: 600; font-size: 0.95rem; color: var(--text-2); letter-spacing: -0.01em; }
-  @media (max-width: 1000px) { .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  @media (max-width: 560px) { .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-
-  /* Section helpers */
-  .head-row { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(36px, 5vw, 56px); }
-  .head-row .section-head { margin-bottom: 0; }
-
-  /* Work */
-  .work-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
-  .work-grid > div { grid-column: span 2; }
-  .work-grid > .wide { grid-column: span 3; }
-  @media (max-width: 980px) { .work-grid > div, .work-grid > .wide { grid-column: span 3; } }
-  @media (max-width: 640px) { .work-grid > div, .work-grid > .wide { grid-column: 1 / -1; } }
-
-  /* Principles */
-  .principles-sec { background: var(--bg-elev); }
-  .principles { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--border); }
-  .principles li { padding: 28px 24px 8px 0; display: grid; gap: 10px; align-content: start; }
-  .principles li + li { padding-left: 24px; border-left: 1px solid var(--border); }
-  .principles p { color: var(--text-2); font-size: 0.95rem; }
-  .p-num { color: var(--accent); font-size: 0.78rem; }
-  @media (max-width: 900px) {
-    .principles { grid-template-columns: 1fr 1fr; }
-    .principles li:nth-child(3) { padding-left: 0; border-left: 0; }
-  }
-  @media (max-width: 560px) {
-    .principles { grid-template-columns: 1fr; }
-    .principles li + li { padding-left: 0; border-left: 0; border-top: 1px solid var(--border); }
-  }
-
-  /* Teaching */
-  .three-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  @media (max-width: 900px) { .three-grid { grid-template-columns: minmax(0, 1fr); } }
-
-  .topic-grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-  .topic-grid li { display: grid; gap: 10px; padding: 22px; font-weight: 500; line-height: 1.4; }
-  .t-num { color: var(--accent); font-size: 0.75rem; }
-  @media (max-width: 900px) { .topic-grid { grid-template-columns: minmax(0, 1fr); } }
-
-  /* Timeline */
-  .career { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 80px); align-items: start; }
-  .career .section-head { position: sticky; top: 110px; }
-  .timeline { list-style: none; padding: 0; border-left: 1px solid var(--border); }
-  .timeline li { position: relative; display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 18px 0 18px 28px; }
-  .timeline li::before {
-    content: ''; position: absolute; left: -5px; top: 26px; width: 9px; height: 9px; border-radius: 50%;
-    background: var(--bg); border: 1px solid var(--border-strong);
-  }
-  .timeline li:first-child::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
-  .t-period { font-size: 0.78rem; color: var(--muted); padding-top: 3px; }
-  .t-role { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; }
-  .t-sector { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
-  @media (max-width: 860px) {
-    .career { grid-template-columns: 1fr; }
-    .career .section-head { position: static; }
-    .timeline li { grid-template-columns: 1fr; gap: 4px; }
-  }
-
-  /* Notes */
-  .notes { list-style: none; padding: 0; border-top: 1px solid var(--border); }
-  .notes a {
-    display: grid; grid-template-columns: 140px 1fr auto; gap: 20px; align-items: baseline;
-    padding: 22px 4px; border-bottom: 1px solid var(--border); transition: background-color 0.2s;
-  }
-  .notes a:hover { background: var(--surface); }
-  .notes time { font-size: 0.8rem; color: var(--muted); }
-  .n-title { font-family: var(--font-display); font-size: 1.3rem; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-  .n-go { color: var(--muted); }
-  .notes a:hover .n-go { color: var(--accent); }
-  @media (max-width: 640px) { .notes a { grid-template-columns: 1fr; gap: 6px; } .n-go { display: none; } }
-
-  /* Contact */
-  .contact { position: relative; overflow: hidden; border-top: 1px solid var(--border); padding-block: clamp(80px, 12vw, 150px); }
-  .contact .glow { top: auto; bottom: -320px; left: 50%; transform: translateX(-50%); }
-  .contact-inner { position: relative; display: grid; gap: 22px; justify-items: center; text-align: center; }
-  .contact-title { font-size: clamp(2.2rem, 5vw, 3.8rem); max-width: 18ch; }
-  .contact .lede { margin-inline: auto; }
-  .contact .cta { justify-content: center; }
-</style>
+<script>
+// Underline tabs.
+document.querySelectorAll<HTMLElement>('[data-utabs]').forEach((list) => {
+  const tabs = Array.from(list.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+  const select = (t: HTMLButtonElement) =>
+    tabs.forEach((x) => {
+      const on = x === t;
+      x.setAttribute('aria-selected', String(on));
+      x.tabIndex = on ? 0 : -1;
+      const p = document.getElementById(x.getAttribute('aria-controls')!);
+      if (p) p.hidden = !on;
+    });
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t));
+    t.addEventListener('keydown', (e) => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!d) return;
+      const n = tabs[(i + d + tabs.length) % tabs.length];
+      n.focus();
+      select(n);
+    });
+  });
+});</script>

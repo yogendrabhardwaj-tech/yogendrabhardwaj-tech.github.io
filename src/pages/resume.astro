@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site, experience, skills, certifications, education } from '../data/profile';
+import { site, experience, skills, certifications, education, research } from '../data/profile';
 import { getSessions } from '../lib/content';
 
 const sessions = (await getSessions()).filter((s) => !s.data.placeholder);
@@ -47,6 +47,15 @@ const sessions = (await getSessions()).filter((s) => !s.data.placeholder);
           {e.points.length > 0 ? <ul>{e.points.map((p) => <li>{p}</li>)}</ul> : <p>{e.summary}</p>}
         </div>
       ))}
+    </section>
+
+    <section class="r-sec">
+      <h2 class="r-h">Publications</h2>
+      <ul>
+        {research.publications.map((p) => (
+          <li><strong>{p.title}</strong>. {p.authors.join(', ')}. <em>{p.venue}</em>, {p.year}.</li>
+        ))}
+      </ul>
     </section>
 
     {sessions.length > 0 && (
