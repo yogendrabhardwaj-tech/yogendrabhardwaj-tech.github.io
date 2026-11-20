@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, experience, skills, certifications, education } from '../data/profile';
+import { getSessions } from '../lib/content';
+
+const sessions = (await getSessions()).filter((s) => !s.data.placeholder);
+---
+
+<Base title="Résumé" description={`Résumé of ${site.name}, ${site.role} — agentic AI, RAG, data engineering and legacy modernization for regulated industries.`}>
+  <div class="container resume">
+    <div class="toolbar no-print">
+      <span class="eyebrow">Résumé</span>
+      <button type="button" class="btn" data-print>Save as PDF ↓</button>
+    </div>
+
+    <header class="r-head">
+      <h1 class="display name">{site.name}</h1>
+      <p class="role"><strong>{site.role}</strong> · Generative AI · Agentic AI · RAG · Data Engineering · Legacy Modernization</p>
+      <p class="contact mono">
+        <a href={`mailto:${site.email}`}>{site.email}</a> · {site.location} ·
+        <a href={site.linkedin}>linkedin.com/in/yogendrabhardwaj</a> ·
+        <a href={site.url}>yogendrabhardwaj.runs-on.dev</a>
+      </p>
+    </header>
+
+    <section class="r-sec">
+      <h2 class="r-h">Summary</h2>
+      <p>
+        AI and data architect with 18 years at Accenture and 3+ years leading generative and agentic AI delivery for regulated
+        life-sciences and financial-services clients. Designs LLM systems end to end: RAG with hybrid vector and structured
+        retrieval, GraphRAG knowledge bases, and multi-agent orchestration with tool calling, human-in-the-loop controls,
+        guardrails and audit trails — delivered under GxP, HIPAA, FDA 21 CFR Part 11 and PCI. Built on hands-on data
+        engineering across Azure Data Factory, Databricks, Synapse, Azure Data Lake, Python and SQL. Primary technical point of
+        contact for client executives and Microsoft product engineering.
+      </p>
+    </section>
+
+    <section class="r-sec">
+      <h2 class="r-h">Experience</h2>
+      {experience.map((e) => (
+        <div class="job">
+          <div class="job-head">
+            <h3>{e.role} <span class="org">· {e.org}</span></h3>
+            <span class="mono period">{e.period}</span>
+          </div>
+          <p class="sector">{e.sector}</p>
+          {e.points.length > 0 ? <ul>{e.points.map((p) => <li>{p}</li>)}</ul> : <p>{e.summary}</p>}
+        </div>
+      ))}
+    </section>
+
+    {sessions.length > 0 && (
+      <section class="r-sec">
+        <h2 class="r-h">Teaching &amp; speaking</h2>
+        <ul>
+          {sessions.map((s) => (
+            <li><strong>{s.data.topic}</strong> — {s.data.format}, {s.data.institution}{s.data.date && `, ${s.data.date.getUTCFullYear()}`}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="r-sec">
+      <h2 class="r-h">Skills</h2>
+      <dl class="skills">
+        {skills.map((s) => (<div><dt>{s.group}</dt><dd>{s.items}</dd></div>))}
+      </dl>
+    </section>
+
+    <div class="two">
+      <section class="r-sec">
+        <h2 class="r-h">Certifications</h2>
+        <ul>{certifications.map((c) => <li>{c}</li>)}</ul>
+      </section>
+      <section class="r-sec">
+        <h2 class="r-h">Education</h2>
+        <ul>{education.map((c) => <li>{c}</li>)}</ul>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<script>
+  document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+</script>
+
+<style>
+  .resume { max-width: 860px; padding-block: clamp(32px, 5vw, 56px) clamp(64px, 9vw, 112px); }
+  .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+  .r-head { display: grid; gap: 12px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+  .name { font-size: clamp(2.4rem, 5vw, 3.4rem); }
+  .role { color: var(--text-2); }
+  .role strong { color: var(--text); }
+  .contact { font-size: 0.8rem; color: var(--muted); line-height: 1.8; }
+  .contact a:hover { color: var(--accent); }
+
+  .r-sec { padding-block: 28px; border-bottom: 1px solid var(--border); color: var(--text-2); font-size: 0.97rem; }
+  .r-h { font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; color: var(--text); margin-bottom: 16px; }
+  .r-sec ul { padding-left: 1.1em; display: grid; gap: 6px; }
+  .r-sec li::marker { color: var(--muted); }
+  .r-sec strong { color: var(--text); font-weight: 600; }
+
+  .job + .job { margin-top: 26px; }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .job h3 { font-size: 1.05rem; font-weight: 600; color: var(--text); }
+  .org { font-weight: 400; color: var(--text-2); }
+  .period { font-size: 0.78rem; color: var(--muted); }
+  .sector { font-size: 0.85rem; color: var(--muted); margin: 2px 0 10px; font-style: italic; }
+
+  .skills { display: grid; gap: 12px; }
+  .skills div { display: grid; grid-template-columns: 200px 1fr; gap: 16px; }
+  .skills dt { font-weight: 600; color: var(--text); font-size: 0.92rem; }
+  @media (max-width: 640px) { .skills div { grid-template-columns: 1fr; gap: 2px; } }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; }
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+
+  @media print {
+    .resume { max-width: none; padding: 0; font-size: 10.5pt; }
+    .r-head, .r-sec { border-color: #ccc; }
+    .name, .r-h, .job h3, .role strong, .r-sec strong, .skills dt { color: #000; }
+    .r-sec, .role, .contact, .org, .period, .sector { color: #333; }
+    .r-sec { padding-block: 12px; }
+    .job { break-inside: avoid; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+    @page { margin: 14mm; }
+  }
+</style>

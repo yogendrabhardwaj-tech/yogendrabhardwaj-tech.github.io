@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Not found" description="This page could not be found.">
+  <section class="nf grid-bg">
+    <div class="container inner">
+      <p class="eyebrow mono">404 · route not found</p>
+      <h1 class="display">This page didn’t pass retrieval.</h1>
+      <p class="lede">Rather than guess, I’ll route you somewhere I’m confident about.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="/">Home <span class="arrow">→</span></a>
+        <a class="btn" href="/work/">Work</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { min-height: 70vh; display: grid; align-items: center; }
+  .inner { display: grid; gap: 22px; justify-items: start; }
+  .display { font-size: clamp(2.4rem, 5.4vw, 4rem); max-width: 16ch; }
+  .cta { display: flex; gap: 12px; }
+</style>

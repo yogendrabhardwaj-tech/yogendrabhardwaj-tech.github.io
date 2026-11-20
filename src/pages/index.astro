@@ -1,0 +1,311 @@
+---
+import Base from '../layouts/Base.astro';
+import TracePanel from '../components/TracePanel.astro';
+import PillarTabs from '../components/PillarTabs.astro';
+import About from '../components/About.astro';
+import WorkCard from '../components/WorkCard.astro';
+import SessionCard from '../components/SessionCard.astro';
+import { site, metrics, platforms, principles, experience, speakingTopics } from '../data/profile';
+import { getWork, getNotes, getSessions, formatDate } from '../lib/content';
+
+const work = await getWork();
+const notes = (await getNotes()).slice(0, 3);
+const sessions = (await getSessions()).slice(0, 3);
+---
+
+<Base>
+  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <section class="hero grid-bg">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span>{site.role}</p>
+        <h1 class="display">Agentic&nbsp;AI that passes the&nbsp;audit.</h1>
+        <p class="lede">
+          I’m <strong>Yogendra Bhardwaj</strong>. I architect production generative AI and multi-agent systems for
+          regulated <strong>life-sciences</strong> and <strong>financial-services</strong> enterprises — grounded,
+          evaluated, and audit-ready from day one, built on 18 years of data engineering at Accenture.
+        </p>
+        <div class="cta">
+          <a href="#work" class="btn btn-primary">View selected work <span class="arrow">→</span></a>
+          <a href="#about" class="btn">About me</a>
+        </div>
+        <ul class="compliance mono" aria-label="Compliance frameworks delivered under">
+          <li>GxP</li><li>HIPAA</li><li>FDA 21 CFR Part 11</li><li>PCI</li>
+        </ul>
+      </div>
+      <div class="hero-visual">
+        <TracePanel />
+        <p class="caption mono">Illustrative trace — the kind of run I design for.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Proof strip ──────────────────────────────────────── -->
+  <section class="proof" aria-label="Highlights">
+    <div class="container">
+      <dl class="metrics">
+        {metrics.map((m) => (
+          <div class="metric">
+            <dt>{m.label}</dt>
+            <dd><span class="v">{m.value}</span>{m.unit && <span class="u">{m.unit}</span>}</dd>
+          </div>
+        ))}
+      </dl>
+      <div class="platforms">
+        <span class="eyebrow">Platforms I build on</span>
+        <ul>{platforms.map((p) => <li>{p}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About ────────────────────────────────────────────── -->
+  <About />
+
+  <!-- ── What I build ─────────────────────────────────────── -->
+  <section class="section" id="build">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span class="num">02</span> / What I build</span>
+        <h2 class="h2">Three layers of AI that holds up in production.</h2>
+      </div>
+      <div class="reveal"><PillarTabs /></div>
+    </div>
+  </section>
+
+  <!-- ── Selected work ────────────────────────────────────── -->
+  <section class="section" id="work">
+    <div class="container">
+      <div class="head-row reveal">
+        <div class="section-head">
+          <span class="eyebrow"><span class="num">03</span> / Selected work</span>
+          <h2 class="h2">Case studies from regulated delivery.</h2>
+          <p class="muted">Client names withheld. Architectures described generically.</p>
+        </div>
+        <a href="/work/" class="link-arrow">All case studies <span>→</span></a>
+      </div>
+      <div class="work-grid">
+        {work.map((w, i) => (
+          <div class:list={['reveal', { wide: i < 2 }]}><WorkCard entry={w} index={i + 1} large={i < 2} /></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Principles ───────────────────────────────────────── -->
+  <section class="section principles-sec">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span class="num">04</span> / How I work</span>
+        <h2 class="h2">Governance is a design input, not a review step.</h2>
+      </div>
+      <ol class="principles">
+        {principles.map((p, i) => (
+          <li class="reveal">
+            <span class="p-num mono">0{i + 1}</span>
+            <h3 class="h3">{p.title}</h3>
+            <p>{p.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ── Teaching ─────────────────────────────────────────── -->
+  <section class="section" id="teaching">
+    <div class="container">
+      <div class="head-row reveal">
+        <div class="section-head">
+          <span class="eyebrow"><span class="num">05</span> / Teaching &amp; speaking</span>
+          <h2 class="h2">Bringing industry AI into the classroom.</h2>
+          <p class="muted">Guest lectures and hands-on sessions for college students on generative AI, agents, data and cloud careers.</p>
+        </div>
+        <a href="/teaching/" class="link-arrow">All sessions <span>→</span></a>
+      </div>
+      {sessions.length > 0 ? (
+        <div class="three-grid">
+          {sessions.map((s) => <div class="reveal"><SessionCard entry={s} /></div>)}
+        </div>
+      ) : (
+        <ol class="topic-grid reveal">
+          {speakingTopics.map((t, i) => (
+            <li class="card"><span class="mono t-num">{String(i + 1).padStart(2, '0')}</span>{t}</li>
+          ))}
+        </ol>
+      )}
+    </div>
+  </section>
+
+  <!-- ── Timeline ─────────────────────────────────────────── -->
+  <section class="section" id="career">
+    <div class="container career">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span class="num">06</span> / Career</span>
+        <h2 class="h2">From .NET to data to agents.</h2>
+        <p class="muted">Eighteen years at Accenture — every layer of the stack that today’s AI depends on.</p>
+        <a href="/resume/" class="link-arrow">Full résumé <span>→</span></a>
+      </div>
+      <ol class="timeline">
+        {experience.map((e) => (
+          <li class="reveal">
+            <span class="t-period mono">{e.period}</span>
+            <div>
+              <h3 class="t-role">{e.role}</h3>
+              <p class="t-sector">{e.sector}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ── Notes ────────────────────────────────────────────── -->
+  {notes.length > 0 && (
+    <section class="section" id="notes">
+      <div class="container">
+        <div class="head-row reveal">
+          <div class="section-head">
+            <span class="eyebrow"><span class="num">07</span> / Notes</span>
+            <h2 class="h2">Architecture notes.</h2>
+          </div>
+          <a href="/notes/" class="link-arrow">All notes <span>→</span></a>
+        </div>
+        <ul class="notes">
+          {notes.map((n) => (
+            <li class="reveal">
+              <a href={`/notes/${n.id}/`}>
+                <time class="mono" datetime={n.data.date.toISOString()}>{formatDate(n.data.date)}</time>
+                <span class="n-title">{n.data.title}{n.data.draft && <span class="placeholder-badge">Draft</span>}</span>
+                <span class="n-go" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- ── Contact ──────────────────────────────────────────── -->
+  <section class="contact grid-bg" id="contact">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="container contact-inner reveal">
+      <span class="eyebrow">Get in touch</span>
+      <h2 class="display contact-title">Building agents for a regulated business?</h2>
+      <p class="lede">I’m happy to talk architecture, delivery, speaking invitations, or roles where governed AI matters.</p>
+      <div class="cta">
+        <a href={`mailto:${site.email}`} class="btn btn-primary">{site.email} <span class="arrow">→</span></a>
+        <a href={site.linkedin} class="btn" target="_blank" rel="me noopener">LinkedIn ↗</a>
+        <a href={site.github} class="btn" target="_blank" rel="me noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .hero { position: relative; overflow: hidden; padding-block: clamp(56px, 9vw, 112px) clamp(56px, 8vw, 96px); }
+  .glow {
+    position: absolute; inset: auto; width: 900px; height: 600px; left: 50%; top: -260px; transform: translateX(-10%);
+    background: radial-gradient(closest-side, var(--glow), transparent); pointer-events: none;
+  }
+  .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(40px, 6vw, 72px); align-items: center; }
+  .hero-copy { display: grid; gap: 26px; }
+  .hero-copy .eyebrow { color: var(--text-2); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--verified); box-shadow: 0 0 0 4px var(--verified-soft); }
+  .lede strong { color: var(--text); font-weight: 600; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .compliance { display: flex; flex-wrap: wrap; gap: 8px 18px; list-style: none; padding: 0; font-size: 0.75rem; color: var(--muted); }
+  .compliance li::before { content: '✓'; color: var(--verified); margin-right: 7px; }
+  .caption { margin-top: 12px; font-size: 0.7rem; color: var(--muted); text-align: right; }
+  @media (max-width: 980px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } }
+
+  /* Proof strip */
+  .proof { border-block: 1px solid var(--border); background: var(--bg-elev); padding-block: 40px; }
+  .metrics { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 24px; }
+  .metric { display: flex; flex-direction: column-reverse; gap: 6px; border-left: 1px solid var(--border); padding-left: 16px; }
+  .metric dt { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
+  .metric dd { display: flex; align-items: baseline; gap: 5px; }
+  .v { font-family: var(--font-display); font-size: clamp(1.7rem, 2.6vw, 2.2rem); font-weight: 500; letter-spacing: -0.02em; line-height: 1; }
+  .u { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+  .platforms { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--border); }
+  .platforms ul { display: flex; flex-wrap: wrap; gap: 10px 28px; list-style: none; padding: 0; }
+  .platforms li { font-weight: 600; font-size: 0.95rem; color: var(--text-2); letter-spacing: -0.01em; }
+  @media (max-width: 1000px) { .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  /* Section helpers */
+  .head-row { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(36px, 5vw, 56px); }
+  .head-row .section-head { margin-bottom: 0; }
+
+  /* Work */
+  .work-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+  .work-grid > div { grid-column: span 2; }
+  .work-grid > .wide { grid-column: span 3; }
+  @media (max-width: 980px) { .work-grid > div, .work-grid > .wide { grid-column: span 3; } }
+  @media (max-width: 640px) { .work-grid > div, .work-grid > .wide { grid-column: 1 / -1; } }
+
+  /* Principles */
+  .principles-sec { background: var(--bg-elev); }
+  .principles { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--border); }
+  .principles li { padding: 28px 24px 8px 0; display: grid; gap: 10px; align-content: start; }
+  .principles li + li { padding-left: 24px; border-left: 1px solid var(--border); }
+  .principles p { color: var(--text-2); font-size: 0.95rem; }
+  .p-num { color: var(--accent); font-size: 0.78rem; }
+  @media (max-width: 900px) {
+    .principles { grid-template-columns: 1fr 1fr; }
+    .principles li:nth-child(3) { padding-left: 0; border-left: 0; }
+  }
+  @media (max-width: 560px) {
+    .principles { grid-template-columns: 1fr; }
+    .principles li + li { padding-left: 0; border-left: 0; border-top: 1px solid var(--border); }
+  }
+
+  /* Teaching */
+  .three-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .three-grid { grid-template-columns: minmax(0, 1fr); } }
+
+  .topic-grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .topic-grid li { display: grid; gap: 10px; padding: 22px; font-weight: 500; line-height: 1.4; }
+  .t-num { color: var(--accent); font-size: 0.75rem; }
+  @media (max-width: 900px) { .topic-grid { grid-template-columns: minmax(0, 1fr); } }
+
+  /* Timeline */
+  .career { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 80px); align-items: start; }
+  .career .section-head { position: sticky; top: 110px; }
+  .timeline { list-style: none; padding: 0; border-left: 1px solid var(--border); }
+  .timeline li { position: relative; display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 18px 0 18px 28px; }
+  .timeline li::before {
+    content: ''; position: absolute; left: -5px; top: 26px; width: 9px; height: 9px; border-radius: 50%;
+    background: var(--bg); border: 1px solid var(--border-strong);
+  }
+  .timeline li:first-child::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .t-period { font-size: 0.78rem; color: var(--muted); padding-top: 3px; }
+  .t-role { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; }
+  .t-sector { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
+  @media (max-width: 860px) {
+    .career { grid-template-columns: 1fr; }
+    .career .section-head { position: static; }
+    .timeline li { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  /* Notes */
+  .notes { list-style: none; padding: 0; border-top: 1px solid var(--border); }
+  .notes a {
+    display: grid; grid-template-columns: 140px 1fr auto; gap: 20px; align-items: baseline;
+    padding: 22px 4px; border-bottom: 1px solid var(--border); transition: background-color 0.2s;
+  }
+  .notes a:hover { background: var(--surface); }
+  .notes time { font-size: 0.8rem; color: var(--muted); }
+  .n-title { font-family: var(--font-display); font-size: 1.3rem; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .n-go { color: var(--muted); }
+  .notes a:hover .n-go { color: var(--accent); }
+  @media (max-width: 640px) { .notes a { grid-template-columns: 1fr; gap: 6px; } .n-go { display: none; } }
+
+  /* Contact */
+  .contact { position: relative; overflow: hidden; border-top: 1px solid var(--border); padding-block: clamp(80px, 12vw, 150px); }
+  .contact .glow { top: auto; bottom: -320px; left: 50%; transform: translateX(-50%); }
+  .contact-inner { position: relative; display: grid; gap: 22px; justify-items: center; text-align: center; }
+  .contact-title { font-size: clamp(2.2rem, 5vw, 3.8rem); max-width: 18ch; }
+  .contact .lede { margin-inline: auto; }
+  .contact .cta { justify-content: center; }
+</style>

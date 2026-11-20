@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { lab, site } from '../data/profile';
+---
+
+<Base title="Lab" description="Open-source tools, hands-on labs and reference builds by Yogendra Bhardwaj.">
+  <PageHeader
+    eyebrow="Lab"
+    title="Things I build in the open."
+    lede="Client work stays confidential, so this is where I tinker in public — tools, labs and reference architectures."
+  />
+  <section class="section">
+    <div class="container grid">
+      {lab.map((p) => (
+        <a href={p.url} target="_blank" rel="noopener" class:list={['card', 'item', { featured: p.featured }]}>
+          <div class="top">
+            <span class="eyebrow">{p.kind}{p.featured && <span class="num"> · Featured</span>}</span>
+            <span class="go" aria-hidden="true">↗</span>
+          </div>
+          <h2 class="name">{p.name}</h2>
+          <p class="desc">{p.description}</p>
+          <div class="tags">{p.tags.map((t) => <span class="tag">{t}</span>)}</div>
+        </a>
+      ))}
+      <a href={site.github} target="_blank" rel="noopener" class="card item more">
+        <span class="eyebrow">GitHub</span>
+        <h2 class="name">More on GitHub ↗</h2>
+        <p class="desc">Experiments, samples and works in progress.</p>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .item { display: flex; flex-direction: column; gap: 14px; padding: 30px; }
+  .featured { grid-column: 1 / -1; background: linear-gradient(135deg, var(--accent-soft), transparent 60%), var(--surface); }
+  .featured .name { font-size: clamp(2rem, 3.4vw, 2.6rem); }
+  .top { display: flex; justify-content: space-between; }
+  .go { color: var(--muted); transition: color 0.2s, transform 0.2s; }
+  .item:hover .go { color: var(--accent); transform: translate(2px, -2px); }
+  .name { font-family: var(--font-display); font-size: 1.6rem; font-weight: 500; letter-spacing: -0.015em; }
+  .desc { color: var(--text-2); max-width: 70ch; }
+  .more { border-style: dashed; justify-content: center; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+</style>

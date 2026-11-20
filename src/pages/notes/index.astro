@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { getNotes, formatDate } from '../../lib/content';
+const notes = await getNotes();
+---
+
+<Base title="Notes" description="Architecture notes on agentic AI, grounded RAG, evaluation and AI governance in regulated industries.">
+  <PageHeader
+    eyebrow="Notes"
+    title="Architecture notes."
+    lede="Short, practical writing on agentic AI, grounded RAG, evaluation and governance — what works in regulated delivery, and what doesn’t."
+  />
+  <section class="section">
+    <div class="container narrow">
+      {notes.length === 0 ? (
+        <div class="card empty">
+          <p class="eyebrow">Coming soon</p>
+          <p>The first notes are on the way. Follow along on <a class="link" href="/rss.xml">RSS</a> or LinkedIn.</p>
+        </div>
+      ) : (
+        <ul class="list">
+          {notes.map((n) => (
+            <li>
+              <a href={`/notes/${n.id}/`}>
+                <time class="mono" datetime={n.data.date.toISOString()}>{formatDate(n.data.date)}</time>
+                <h2 class="t">{n.data.title}{n.data.draft && <span class="placeholder-badge">Draft</span>}</h2>
+                <p class="d">{n.data.description}</p>
+                <div class="tags">{n.data.tags.map((t) => <span class="tag">{t}</span>)}</div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .empty { padding: 32px; display: grid; gap: 10px; color: var(--text-2); }
+  .list { list-style: none; padding: 0; }
+  .list li + li { border-top: 1px solid var(--border); }
+  .list a { display: grid; gap: 10px; padding: 32px 0; }
+  .list time { font-size: 0.8rem; color: var(--muted); }
+  .t { font-family: var(--font-display); font-size: 1.7rem; font-weight: 500; letter-spacing: -0.015em; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; transition: color 0.2s; }
+  .list a:hover .t { color: var(--accent); }
+  .d { color: var(--text-2); }
+</style>

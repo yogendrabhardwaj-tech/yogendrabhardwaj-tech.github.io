@@ -1,0 +1,101 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getWork } from '../../lib/content';
+import { site } from '../../data/profile';
+
+export async function getStaticPaths() {
+  const work = await getWork();
+  return work.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, next: work[(i + 1) % work.length] },
+  }));
+}
+
+const { entry, next } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: d.title,
+  description: d.summary,
+  author: { '@type': 'Person', name: site.name, url: site.url },
+  url: new URL(`/work/${entry.id}/`, site.url).href,
+};
+---
+
+<Base title={d.title} description={d.summary} type="article" jsonLd={ld}>
+  <article>
+    <header class="cs-head grid-bg">
+      <div class="container narrow-wide">
+        <a href="/work/" class="back mono">← All work</a>
+        <span class="eyebrow">{d.sector}</span>
+        <h1 class="display title">{d.title}</h1>
+        <p class="lede">{d.summary}</p>
+        <dl class="facts">
+          <div><dt>Role</dt><dd>{d.role}</dd></div>
+          <div><dt>Period</dt><dd>{d.period}</dd></div>
+          <div><dt>Stack</dt><dd class="tags">{d.stack.map((s) => <span class="tag">{s}</span>)}</dd></div>
+        </dl>
+      </div>
+    </header>
+
+    {d.metrics.length > 0 && (
+      <section class="outcomes" aria-label="Outcomes">
+        <div class="container narrow-wide">
+          <dl>
+            {d.metrics.map((m) => (
+              <div><dt>{m.label}</dt><dd>{m.value}</dd></div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    )}
+
+    <div class="container narrow body">
+      <div class="prose"><Content /></div>
+      <p class="note mono">Client identity withheld. Details are limited to what can be shared publicly.</p>
+    </div>
+  </article>
+
+  <nav class="next" aria-label="Next case study">
+    <div class="container narrow-wide">
+      <a href={`/work/${next.id}/`} class="card next-card">
+        <span class="eyebrow">Next case study</span>
+        <span class="next-title">{next.data.title}</span>
+        <span class="go" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </nav>
+</Base>
+
+<style>
+  .narrow-wide { max-width: 960px; }
+  .cs-head { border-bottom: 1px solid var(--border); padding-block: clamp(40px, 6vw, 72px) clamp(36px, 5vw, 56px); }
+  .cs-head .container { display: grid; gap: 18px; }
+  .back { font-size: 0.8rem; color: var(--muted); }
+  .back:hover { color: var(--accent); }
+  .title { font-size: clamp(2.2rem, 4.8vw, 3.6rem); }
+  .facts { display: grid; grid-template-columns: auto auto 1fr; gap: 24px 40px; margin-top: 18px; padding-top: 22px; border-top: 1px solid var(--border); }
+  .facts dt { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .facts dd { font-size: 0.95rem; }
+  @media (max-width: 760px) { .facts { grid-template-columns: 1fr; } }
+
+  .outcomes { border-bottom: 1px solid var(--border); background: var(--bg-elev); padding-block: 32px; }
+  .outcomes dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; }
+  .outcomes dl > div { display: flex; flex-direction: column-reverse; gap: 6px; border-left: 1px solid var(--border); padding-left: 16px; }
+  .outcomes dd { font-family: var(--font-display); font-size: 1.9rem; font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; }
+  .outcomes dt { font-size: 0.82rem; color: var(--muted); }
+
+  .body { padding-block: clamp(48px, 7vw, 80px); }
+  .note { margin-top: 56px; font-size: 0.75rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 18px; }
+
+  .next { padding-bottom: clamp(64px, 9vw, 112px); }
+  .next-card { display: grid; grid-template-columns: 1fr auto; gap: 8px 20px; align-items: center; padding: 28px 32px; }
+  .next-card .eyebrow { grid-column: 1; }
+  .next-title { grid-column: 1; font-family: var(--font-display); font-size: 1.5rem; }
+  .go { grid-column: 2; grid-row: 1 / span 2; font-size: 1.4rem; color: var(--muted); transition: color 0.2s, transform 0.2s; }
+  .next-card:hover .go { color: var(--accent); transform: translateX(4px); }
+</style>

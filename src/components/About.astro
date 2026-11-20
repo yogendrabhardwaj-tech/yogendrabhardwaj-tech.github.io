@@ -1,0 +1,70 @@
+---
+import { about, site } from '../data/profile';
+---
+
+<section class="section about" id="about">
+  <div class="container grid">
+    <div class="left reveal">
+      <figure class:list={['photo', { 'is-placeholder': !about.photo }]}>
+        {about.photo ? (
+          <img src={about.photo} alt={`Portrait of ${site.name}`} width="480" height="480" loading="lazy" />
+        ) : (
+          <>
+            <span class="initials" aria-hidden="true">YB</span>
+            <figcaption class="placeholder-badge">Photo placeholder</figcaption>
+          </>
+        )}
+      </figure>
+      <div class="quick">
+        <a href="/resume/" class="btn btn-primary">View résumé <span class="arrow">→</span></a>
+        <a href={site.linkedin} class="btn" target="_blank" rel="me noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span class="num">01</span> / About me</span>
+        <h2 class="h2">In plain words.</h2>
+      </div>
+      <div class="bio reveal">
+        {about.bio.map((p, i) => <p class:list={{ first: i === 0 }}>{p}</p>)}
+      </div>
+      <dl class="facts reveal" aria-label="At a glance">
+        {about.facts.map((f) => (
+          <div><dt>{f.label}</dt><dd>{f.value}</dd></div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: clamp(36px, 6vw, 80px); align-items: start; }
+  .left { position: sticky; top: 110px; display: grid; gap: 20px; }
+  .photo {
+    position: relative; aspect-ratio: 1; border-radius: var(--radius-lg); overflow: hidden;
+    border: 1px solid var(--border); background: radial-gradient(circle at 30% 20%, var(--accent-soft), transparent 60%), var(--surface);
+    display: grid; place-items: center;
+  }
+  .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .initials { font-family: var(--font-display); font-size: clamp(4rem, 9vw, 6.5rem); color: var(--text-2); letter-spacing: -0.03em; }
+  .photo .placeholder-badge { position: absolute; left: 14px; bottom: 14px; }
+  .quick { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .bio { display: grid; gap: 18px; color: var(--text-2); font-size: 1.08rem; line-height: 1.75; max-width: 64ch; }
+  .bio .first { font-size: clamp(1.2rem, 1.9vw, 1.4rem); line-height: 1.55; color: var(--text); }
+
+  .facts { margin-top: 40px; border-top: 1px solid var(--border); }
+  .facts div { display: grid; grid-template-columns: 140px 1fr; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .facts dt { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+  .facts dd { font-size: 0.98rem; }
+
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: minmax(0, 1fr); }
+    .left { position: static; grid-template-columns: 160px 1fr; align-items: end; }
+    .quick { flex-direction: column; align-items: start; }
+  }
+  @media (max-width: 520px) {
+    .facts div { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>

@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import WorkCard from '../../components/WorkCard.astro';
+import { getWork } from '../../lib/content';
+const work = await getWork();
+---
+
+<Base title="Work" description="Case studies in agentic AI, grounded RAG and data modernization for regulated life-sciences and financial-services enterprises.">
+  <PageHeader
+    eyebrow="Work"
+    title="Case studies from regulated delivery."
+    lede="Agentic platforms, grounded assistants and modernization programs — each designed to pass an audit. Client names are withheld and architectures are described generically."
+  />
+  <section class="section">
+    <div class="container grid">
+      {work.map((w, i) => <WorkCard entry={w} index={i + 1} large />)}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+</style>

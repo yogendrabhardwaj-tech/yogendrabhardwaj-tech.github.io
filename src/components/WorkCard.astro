@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { entry: CollectionEntry<'work'>; index: number; large?: boolean }
+const { entry, index, large = false } = Astro.props;
+const d = entry.data;
+---
+
+<a href={`/work/${entry.id}/`} class:list={['card', 'work', { large }]}>
+  <div class="top">
+    <span class="eyebrow"><span class="num">{String(index).padStart(2, '0')}</span> {d.sector}</span>
+    <span class="go" aria-hidden="true">↗</span>
+  </div>
+  <h3 class="title">{d.title}</h3>
+  <p class="summary">{d.summary}</p>
+  {d.metrics.length > 0 && (
+    <dl class="metrics">
+      {d.metrics.slice(0, large ? 3 : 2).map((m) => (
+        <div><dt class="sr-only">{m.label}</dt><dd><strong>{m.value}</strong><span>{m.label}</span></dd></div>
+      ))}
+    </dl>
+  )}
+  <div class="tags">{d.stack.slice(0, 4).map((s) => <span class="tag">{s}</span>)}</div>
+</a>
+
+<style>
+  .work { display: flex; flex-direction: column; gap: 14px; padding: 28px; height: 100%; }
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .go { color: var(--muted); transition: color 0.2s, transform 0.2s; }
+  .work:hover .go { color: var(--accent); transform: translate(2px, -2px); }
+  .title { font-family: var(--font-display); font-size: 1.45rem; font-weight: 500; letter-spacing: -0.012em; line-height: 1.2; }
+  .large .title { font-size: clamp(1.6rem, 2.4vw, 2rem); }
+  .summary { color: var(--text-2); font-size: 0.97rem; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 12px 28px; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--border); }
+  .metrics dd { display: grid; }
+  .metrics strong { font-family: var(--font-mono); font-size: 1.05rem; font-weight: 600; color: var(--text); }
+  .metrics span { font-size: 0.78rem; color: var(--muted); }
+</style>

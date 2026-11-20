@@ -1,0 +1,145 @@
+---
+import { Code } from 'astro:components';
+import { pillars } from '../data/profile';
+---
+
+<div class="tabs" data-tabs>
+  <div class="tablist" role="tablist" aria-label="Capabilities">
+    {pillars.map((p, i) => (
+      <button
+        role="tab"
+        type="button"
+        id={`tab-${p.id}`}
+        aria-controls={`panel-${p.id}`}
+        aria-selected={i === 0 ? 'true' : 'false'}
+        tabindex={i === 0 ? 0 : -1}
+      >
+        <span class="tab-num mono">0{i + 1}</span>
+        {p.label}
+      </button>
+    ))}
+  </div>
+
+  {pillars.map((p, i) => (
+    <div
+      class="panel"
+      role="tabpanel"
+      id={`panel-${p.id}`}
+      aria-labelledby={`tab-${p.id}`}
+      hidden={i !== 0}
+      tabindex="0"
+    >
+      <div class="copy">
+        <h3 class="panel-title">{p.title}</h3>
+        <p class="panel-body">{p.body}</p>
+        <ul class="points">
+          {p.points.map((pt) => <li>{pt}</li>)}
+        </ul>
+        <a href={p.caseStudy} class="link-arrow">Read the case study <span>→</span></a>
+      </div>
+
+      <div class="visual">
+        <ol class="flow" aria-label="Architecture flow">
+          {p.flow.map((step, j) => (
+            <li>
+              <span class="node">{step}</span>
+              {j < p.flow.length - 1 && <span class="edge" aria-hidden="true"></span>}
+            </li>
+          ))}
+        </ol>
+        <div class="code-card">
+          <div class="code-head mono"><span>{p.lang}</span><span class="muted">illustrative</span></div>
+          <Code code={p.code} lang={p.lang as any} themes={{ light: 'github-light', dark: 'github-dark-dimmed' }} defaultColor={false} />
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const select = (tab: HTMLButtonElement) => {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = root.querySelector<HTMLElement>(`#${t.getAttribute('aria-controls')}`);
+        if (panel) panel.hidden = !on;
+      });
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(tab));
+      tab.addEventListener('keydown', (e) => {
+        const dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!dir) return;
+        e.preventDefault();
+        const next = tabs[(i + dir + tabs.length) % tabs.length];
+        next.focus();
+        select(next);
+      });
+    });
+  });
+</script>
+
+<style>
+  .tablist {
+    display: flex; width: fit-content; gap: 4px; padding: 4px;
+    border: 1px solid var(--border); border-radius: 999px; background: var(--surface);
+    margin-bottom: 32px; max-width: 100%; overflow-x: auto;
+  }
+  [role='tab'] {
+    display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+    padding: 10px 18px; border-radius: 999px; font-size: 0.92rem; font-weight: 500; color: var(--text-2);
+    transition: color 0.2s, background-color 0.2s;
+  }
+  [role='tab']:hover { color: var(--text); }
+  [role='tab'][aria-selected='true'] { background: var(--text); color: var(--bg); }
+  [role='tab'][aria-selected='true'] .tab-num { color: var(--bg); opacity: 0.6; }
+  .tab-num { font-size: 0.7rem; color: var(--muted); }
+
+  .panel {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(28px, 5vw, 64px);
+    align-items: start;
+  }
+  .panel[hidden] { display: none; }
+  .panel:focus-visible { outline-offset: 8px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .panel:not([hidden]) { animation: in 0.45s ease both; }
+    @keyframes in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  }
+  .panel-title { font-family: var(--font-display); font-size: clamp(1.6rem, 2.6vw, 2.1rem); font-weight: 450; letter-spacing: -0.015em; }
+  .panel-body { margin-top: 16px; color: var(--text-2); }
+  .points { list-style: none; padding: 0; margin: 24px 0 28px; display: grid; gap: 10px; }
+  .points li { position: relative; padding-left: 26px; color: var(--text-2); font-size: 0.97rem; }
+  .points li::before {
+    content: ''; position: absolute; left: 0; top: 0.62em; width: 12px; height: 1px; background: var(--accent);
+  }
+
+  .visual { display: grid; gap: 16px; }
+  .flow {
+    list-style: none; padding: 18px; margin: 0;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 0;
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
+  }
+  .flow li { display: flex; align-items: center; }
+  .node {
+    font-family: var(--font-mono); font-size: 0.72rem; white-space: nowrap;
+    padding: 7px 11px; border-radius: 7px; border: 1px solid var(--border-strong);
+    background: var(--surface); color: var(--text);
+  }
+  .flow li:last-child .node { border-color: var(--verified); color: var(--verified); background: var(--verified-soft); }
+  .edge { width: 18px; height: 1px; background: var(--border-strong); position: relative; }
+  .edge::after {
+    content: ''; position: absolute; right: 0; top: -3px;
+    border-left: 5px solid var(--border-strong); border-top: 3.5px solid transparent; border-bottom: 3.5px solid transparent;
+  }
+
+  .code-card { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); overflow: hidden; }
+  .code-head {
+    display: flex; justify-content: space-between; padding: 10px 18px;
+    border-bottom: 1px solid var(--border); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2);
+  }
+
+  @media (max-width: 860px) { .panel { grid-template-columns: minmax(0, 1fr); } }
+</style>

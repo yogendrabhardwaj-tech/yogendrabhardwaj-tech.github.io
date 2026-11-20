@@ -1,0 +1,57 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getNotes, formatDate } from '../../lib/content';
+import { site } from '../../data/profile';
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return notes.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const url = new URL(`/notes/${entry.id}/`, site.url).href;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: d.title,
+  description: d.description,
+  datePublished: d.date.toISOString(),
+  author: { '@type': 'Person', name: site.name, url: site.url },
+  mainEntityOfPage: url,
+  keywords: d.tags.join(', '),
+};
+---
+
+<Base title={d.title} description={d.description} type="article" published={d.date} jsonLd={ld}>
+  <article class="container narrow post">
+    <a href="/notes/" class="back mono">← All notes</a>
+    <header class="head">
+      <div class="meta">
+        <time class="mono" datetime={d.date.toISOString()}>{formatDate(d.date)}</time>
+        {d.draft && <span class="placeholder-badge">Draft — not published</span>}
+      </div>
+      <h1 class="display title">{d.title}</h1>
+      <p class="lede">{d.description}</p>
+      <div class="tags">{d.tags.map((t) => <span class="tag">{t}</span>)}</div>
+    </header>
+    <div class="prose"><Content /></div>
+    <footer class="foot">
+      <p>Written by <strong>{site.name}</strong>, {site.role}. Views are my own.</p>
+      <a class="link-arrow" href={site.linkedin} target="_blank" rel="noopener">Discuss on LinkedIn <span>↗</span></a>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .post { padding-block: clamp(40px, 6vw, 72px) clamp(64px, 9vw, 112px); }
+  .back { font-size: 0.8rem; color: var(--muted); }
+  .back:hover { color: var(--accent); }
+  .head { display: grid; gap: 18px; margin: 28px 0 48px; padding-bottom: 36px; border-bottom: 1px solid var(--border); }
+  .meta { display: flex; gap: 14px; align-items: center; font-size: 0.8rem; color: var(--muted); }
+  .title { font-size: clamp(2.1rem, 4.6vw, 3.2rem); }
+  .foot { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--muted); font-size: 0.92rem; }
+  .foot strong { color: var(--text); }
+</style>

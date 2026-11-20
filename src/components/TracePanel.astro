@@ -1,0 +1,146 @@
+---
+// Signature hero element: an illustrative agent trace, styled like an
+// observability waterfall. Shows the pitch (governed agentic AI) instead of stating it.
+type Kind = 'agent' | 'tool' | 'guard' | 'llm' | 'eval' | 'human' | 'audit';
+const spans: { name: string; kind: Kind; start: number; width: number; meta: string; depth?: number }[] = [
+  { name: 'agent.plan', kind: 'agent', start: 0, width: 9, meta: '0.21s' },
+  { name: 'tool.graphrag.search', kind: 'tool', start: 9, width: 22, meta: '14 nodes', depth: 1 },
+  { name: 'tool.assay.query', kind: 'tool', start: 11, width: 16, meta: 'rbac: read', depth: 1 },
+  { name: 'guardrail.pii_mask', kind: 'guard', start: 31, width: 6, meta: 'pass', depth: 1 },
+  { name: 'llm.synthesize', kind: 'llm', start: 37, width: 33, meta: 'claude', depth: 1 },
+  { name: 'eval.groundedness', kind: 'eval', start: 70, width: 9, meta: '0.94', depth: 1 },
+  { name: 'human.approve', kind: 'human', start: 79, width: 15, meta: 'scientist', depth: 1 },
+  { name: 'audit.log', kind: 'audit', start: 94, width: 6, meta: 'immutable', depth: 1 },
+];
+const labels: Record<Kind, string> = {
+  agent: 'AGENT', tool: 'TOOL', guard: 'GUARD', llm: 'LLM', eval: 'EVAL', human: 'HITL', audit: 'AUDIT',
+};
+---
+
+<figure class="trace" aria-label="Illustrative trace of a governed AI agent run: plan, retrieve, mask PII, synthesize, evaluate groundedness, human approval, audit log.">
+  <div class="trace-head">
+    <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+    <span class="mono">trace · target-validation.run</span>
+    <span class="status"><span class="pulse" aria-hidden="true"></span>audited</span>
+  </div>
+
+  <div class="row scale-row" aria-hidden="true">
+    <span></span>
+    <span class="scale mono">
+      {['0s', '1.2s', '2.4s'].map((t, i) => <span style={`left:${i * 50}%`}>{t}</span>)}
+    </span>
+    <span></span><span class="meta-col"></span>
+  </div>
+
+  <ol class="rows">
+    {spans.map((s, i) => (
+      <li class="row" style={`--i:${i}`}>
+        <span class="name mono" style={`--d:${s.depth ?? 0}`}>
+          {s.depth ? <span class="branch" aria-hidden="true">└</span> : null}
+          {s.name}
+        </span>
+        <span class="track" aria-hidden="true">
+          <span class={`bar k-${s.kind}`} style={`left:${s.start}%;width:${s.width}%`}></span>
+        </span>
+        <span class={`kind k-${s.kind}`}>{labels[s.kind]}</span>
+        <span class="meta mono">{s.meta}</span>
+      </li>
+    ))}
+  </ol>
+
+  <figcaption class="trace-foot mono">
+    <span><b class="ok">✓</b> grounded 0.94</span>
+    <span><b class="ok">✓</b> pii masked</span>
+    <span><b class="ok">✓</b> human approved</span>
+    <span><b class="ok">✓</b> 8 spans logged</span>
+  </figcaption>
+</figure>
+
+<style>
+  .trace {
+    --row-h: 34px;
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 40px 80px -30px rgb(0 0 0 / 0.5);
+    overflow: hidden;
+    font-size: 0.78rem;
+  }
+  :global([data-theme='light']) .trace { box-shadow: 0 30px 60px -30px rgb(20 22 26 / 0.18); }
+
+  .trace-head {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--muted);
+  }
+  .dots { display: flex; gap: 6px; }
+  .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--border-strong); }
+  .status {
+    margin-left: auto; display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--verified); background: var(--verified-soft); padding: 3px 9px; border-radius: 999px;
+  }
+  .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--verified); }
+
+  .scale-row { height: 30px; padding-top: 8px; }
+  .scale-row:hover { background: none; }
+  .scale { position: relative; height: 100%; color: var(--muted); font-size: 0.62rem; opacity: 0.85; }
+  .scale span { position: absolute; top: 4px; transform: translateX(-50%); }
+  .scale span:first-child { transform: none; }
+  .scale span:last-child { transform: translateX(-100%); }
+
+  .rows { list-style: none; padding: 4px 0 8px; }
+  .row {
+    display: grid; grid-template-columns: 36% minmax(0, 1fr) 54px 70px; align-items: center; gap: 0 8px;
+    height: var(--row-h); padding: 0 16px;
+  }
+  .row:hover { background: var(--surface-2); }
+  .name { color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-left: calc(var(--d) * 12px); font-size: 0.74rem; }
+  .branch { color: var(--muted); margin-right: 6px; }
+
+  .track {
+    position: relative; height: 100%;
+    background-image: linear-gradient(to right, var(--border) 1px, transparent 1px);
+    background-size: 25% 100%;
+  }
+  .bar {
+    position: absolute; top: 50%; height: 10px; margin-top: -5px; border-radius: 3px;
+    background: currentColor; min-width: 4px;
+  }
+  .kind {
+    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.06em; text-align: center;
+    padding: 2px 0; border-radius: 4px; background: color-mix(in srgb, currentColor 14%, transparent);
+  }
+  .meta { color: var(--muted); font-size: 0.7rem; text-align: right; white-space: nowrap; }
+
+  .k-agent { color: var(--text-2); }
+  .k-tool { color: var(--accent); }
+  .k-guard { color: var(--warn); }
+  .k-llm { color: var(--violet); }
+  .k-eval { color: var(--verified); }
+  .k-human { color: #f472b6; }
+  .k-audit { color: var(--verified); }
+  :global([data-theme='light']) .k-human { color: #c0306f; }
+
+  .trace-foot {
+    display: flex; flex-wrap: wrap; gap: 8px 20px;
+    padding: 12px 16px; border-top: 1px solid var(--border);
+    color: var(--text-2); font-size: 0.72rem; background: var(--bg-elev);
+  }
+  .ok { color: var(--verified); font-weight: 700; margin-right: 4px; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .bar { transform-origin: left center; animation: grow 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(0.35s + var(--i) * 0.28s); }
+    .row .kind, .row .meta { animation: fade 0.4s ease both; animation-delay: calc(0.5s + var(--i) * 0.28s); }
+    .trace-foot span { animation: fade 0.5s ease both; animation-delay: 2.9s; }
+    .pulse { animation: pulse 2s ease-in-out infinite; }
+  }
+  @keyframes grow { from { transform: scaleX(0); opacity: 0.4; } to { transform: scaleX(1); opacity: 1; } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  @media (max-width: 560px) {
+    .row { grid-template-columns: 52% minmax(0, 1fr) 46px; padding: 0 12px; }
+    .trace-head .mono { display: none; }
+    .meta, .meta-col, .scale-row { display: none; }
+  }
+</style>

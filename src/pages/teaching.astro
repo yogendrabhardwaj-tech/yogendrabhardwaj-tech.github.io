@@ -1,0 +1,103 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SessionCard from '../components/SessionCard.astro';
+import { getSessions } from '../lib/content';
+import { site, speakingTopics } from '../data/profile';
+
+const sessions = await getSessions();
+const rendered = await Promise.all(sessions.map(async (s) => ({ entry: s, Content: (await render(s)).Content })));
+const themes = ['GenAI & Agents', 'Data & Cloud', 'Careers & Industry'] as const;
+const groups = themes
+  .map((t) => ({ theme: t, items: rendered.filter((r) => r.entry.data.theme === t) }))
+  .filter((g) => g.items.length > 0);
+
+const real = sessions.filter((s) => !s.data.placeholder);
+const institutions = new Set(real.map((s) => s.data.institution)).size;
+
+const ld = real
+  .filter((s) => s.data.date)
+  .map((s) => ({
+    '@context': 'https://schema.org',
+    '@type': 'EducationEvent',
+    name: s.data.topic,
+    startDate: s.data.date!.toISOString().slice(0, 10),
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: { '@type': 'Place', name: s.data.institution, address: s.data.location ?? s.data.institution },
+    performer: { '@type': 'Person', name: site.name, url: site.url },
+    organizer: { '@type': 'Organization', name: s.data.institution },
+  }));
+
+const inviteHref = `mailto:${site.email}?subject=${encodeURIComponent('Speaking invitation')}`;
+---
+
+<Base
+  title="Teaching & speaking"
+  description="Guest lectures, workshops and hands-on labs for college students on generative AI, AI agents, data engineering and cloud careers."
+  jsonLd={ld.length ? ld : undefined}
+>
+  <PageHeader
+    eyebrow="Teaching & speaking"
+    title="Bringing industry AI into the classroom."
+    lede="I give guest lectures and run hands-on sessions for college students — showing how generative AI, agents and data platforms are really built and governed in industry, and what it takes to build a career around them."
+  >
+    <dl class="stats">
+      {real.length > 0 && <div><dt>Sessions</dt><dd>{real.length}</dd></div>}
+      {institutions > 0 && <div><dt>Institutions</dt><dd>{institutions}</dd></div>}
+      <div><dt>Formats</dt><dd class="small">Lectures · Workshops · Labs</dd></div>
+    </dl>
+  </PageHeader>
+
+  {groups.map((g) => (
+    <section class="section group">
+      <div class="container">
+        <h2 class="eyebrow g-title">{g.theme}</h2>
+        <div class="grid">
+          {g.items.map(({ entry, Content }) => (
+            <SessionCard entry={entry} showBody>
+              <Content />
+            </SessionCard>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section invite">
+    <div class="container invite-grid">
+      <div class="stack">
+        <span class="eyebrow">Invite me to speak</span>
+        <h2 class="h2">Topics I can bring to your students.</h2>
+        <p class="muted">Lectures run 45–90 minutes; hands-on labs run half a day. Every session is grounded in real enterprise delivery, not slides alone.</p>
+        <a class="btn btn-primary" href={inviteHref}>Send an invitation <span class="arrow">→</span></a>
+      </div>
+      <ol class="topics">
+        {speakingTopics.map((t, i) => (
+          <li><span class="mono num">{String(i + 1).padStart(2, '0')}</span>{t}</li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .stats { display: flex; flex-wrap: wrap; gap: 20px 48px; margin-top: 12px; }
+  .stats div { display: flex; flex-direction: column-reverse; gap: 4px; }
+  .stats dt { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .stats dd { font-family: var(--font-display); font-size: 2rem; line-height: 1.1; }
+  .stats dd.small { font-family: var(--font-body); font-size: 1rem; padding-top: 0.6rem; color: var(--text-2); }
+
+  .group { padding-block: clamp(48px, 7vw, 80px); }
+  .g-title { margin-bottom: 24px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+
+  .invite { background: var(--bg-elev); }
+  .invite-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+  .invite-grid .btn { justify-self: start; margin-top: 8px; }
+  .stack { display: grid; gap: 16px; }
+  .topics { list-style: none; padding: 0; border-top: 1px solid var(--border); }
+  .topics li { display: flex; gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--border); font-size: 1.02rem; }
+  .num { color: var(--accent); font-size: 0.78rem; padding-top: 4px; }
+  @media (max-width: 860px) { .invite-grid { grid-template-columns: 1fr; } }
+</style>
