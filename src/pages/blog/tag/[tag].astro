@@ -1,0 +1,22 @@
+---
+import BlogShell from '../../../components/blog/BlogShell.astro';
+import PostCard from '../../../components/blog/PostCard.astro';
+import { getPosts, tagSlug } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const names = new Map<string, string>();
+  posts.flatMap((p) => p.data.tags).forEach((t) => names.set(tagSlug(t), names.get(tagSlug(t)) ?? t));
+  return [...names].map(([tag, name]) => ({
+    params: { tag },
+    props: { name, posts: posts.filter((p) => p.data.tags.some((t) => tagSlug(t) === tag)) },
+  }));
+}
+
+const { tag } = Astro.params;
+const { name, posts } = Astro.props;
+---
+
+<BlogShell title={`#${name} · Blog`} description={`Posts tagged ${name}.`} eyebrow="Blog · Tag" heading={`#${name}`} lede={`${posts.length} post${posts.length === 1 ? '' : 's'} tagged “${name}”.`} active={`tag:${tag}`}>
+  {posts.map((p) => <PostCard post={p} />)}
+</BlogShell>

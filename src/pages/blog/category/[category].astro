@@ -1,0 +1,28 @@
+---
+import BlogShell from '../../../components/blog/BlogShell.astro';
+import PostCard from '../../../components/blog/PostCard.astro';
+import { categories, type CategoryKey } from '../../../data/blog';
+import { getPosts } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return (Object.keys(categories) as CategoryKey[]).map((category) => ({
+    params: { category },
+    props: { posts: posts.filter((p) => p.data.category === category) },
+  }));
+}
+
+const { category } = Astro.params as { category: CategoryKey };
+const { posts } = Astro.props;
+const cat = categories[category];
+---
+
+<BlogShell title={`${cat.label} · Blog`} description={cat.blurb} eyebrow="Blog · Topic" heading={cat.label} lede={cat.blurb} active={category}>
+  {posts.length === 0 ? (
+    <div class="card empty"><p class="eyebrow">Coming soon</p><p>No posts in this topic yet.</p></div>
+  ) : (
+    posts.map((p) => <PostCard post={p} />)
+  )}
+</BlogShell>
+
+<style>.empty { padding: 32px; display: grid; gap: 10px; color: var(--text-2); }</style>

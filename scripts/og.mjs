@@ -42,7 +42,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
   <rect width="1200" height="630" fill="url(#side)"/><rect width="1200" height="630" fill="url(#fade)"/>
   <rect x="72" y="72" width="44" height="44" rx="11" fill="#f26b1d"/>
   <text x="94" y="101" text-anchor="middle" font-family="Menlo, monospace" font-size="17" font-weight="700" fill="#0a0c10">YB</text>
-  <text x="134" y="92" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#e7e9ee">Yogendra K. Bhardwaj</text>
+  <text x="134" y="92" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#e7e9ee">Yogendra Bhardwaj</text>
   <text x="134" y="114" font-family="Menlo, monospace" font-size="14" fill="#ffc86b">PROFESSIONAL SNAPSHOT</text>
   <text x="72" y="250" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="64" letter-spacing="-2" fill="#ffffff">Enterprise AI</text>
   <text x="72" y="326" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="64" letter-spacing="-2" fill="#ffffff">you can</text>

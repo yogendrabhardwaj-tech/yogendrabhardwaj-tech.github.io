@@ -1,6 +1,6 @@
 # yogendrabhardwaj.runs-on.dev
 
-Personal brand site of Yogendra K. Bhardwaj — AI & Data Solutions Architect.
+Personal brand site of Yogendra Bhardwaj — AI & Data Solutions Architect.
 Static site built with [Astro](https://astro.build), deployed to GitHub Pages by GitHub Actions.
 
 ## Run locally

@@ -1,0 +1,38 @@
+---
+import BlogShell from '../../components/blog/BlogShell.astro';
+import PostCard from '../../components/blog/PostCard.astro';
+import { blogMeta } from '../../data/blog';
+import { getPosts } from '../../lib/content';
+
+const posts = await getPosts();
+// Featured = newest post marked `featured: true`, else the newest post.
+const hero = posts.find((p) => p.data.featured) ?? posts[0];
+const rest = posts.filter((p) => p !== hero);
+---
+
+<BlogShell
+  title={blogMeta.title}
+  description={blogMeta.description}
+  eyebrow="Blog"
+  heading="Learn it. Use it. Become it."
+  lede="What I’m learning, practical utility guides, and honest roadmaps on how to become an AI engineer, architect and more."
+  active="all"
+>
+  {posts.length === 0 ? (
+    <div class="card empty">
+      <p class="eyebrow">Coming soon</p>
+      <p>The first posts are on the way. Subscribe by <a class="link" href="/blog/rss.xml">RSS</a> to get them.</p>
+    </div>
+  ) : (
+    <>
+      <PostCard post={hero} featured />
+      {rest.length > 0 && <h2 class="eyebrow latest">Latest posts</h2>}
+      {rest.map((p) => <PostCard post={p} />)}
+    </>
+  )}
+</BlogShell>
+
+<style>
+  .empty { padding: 32px; display: grid; gap: 10px; color: var(--text-2); }
+  .latest { margin-top: 18px; }
+</style>

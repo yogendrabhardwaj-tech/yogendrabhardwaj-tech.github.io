@@ -3,13 +3,13 @@
 
 export const site = {
   url: 'https://yogendrabhardwaj.runs-on.dev',
-  name: 'Yogendra K. Bhardwaj',
+  name: 'Yogendra Bhardwaj',
   shortName: 'Yogendra Bhardwaj',
   role: 'AI & Data Solutions Architect',
   headline: 'Enterprise AI Across Industries',
   tagline: 'Enterprise AI you can trust.',
   description:
-    'Yogendra K. Bhardwaj architects production AI agents, assistants and data platforms for enterprises in banking, insurance, life sciences, public transportation and manufacturing — built on 18 years of enterprise delivery.',
+    'Yogendra Bhardwaj architects production AI agents, assistants and data platforms for enterprises in banking, insurance, life sciences, public transportation and manufacturing — built on 18 years of enterprise delivery.',
   location: 'Wilmington, DE, United States',
   email: 'yogendrabhardwaj@outlook.com',
   linkedin: 'https://www.linkedin.com/in/yogendrabhardwaj/',
@@ -421,9 +421,9 @@ export const research = {
 export const academicProfile = {
   title: 'AI & Data Solutions Architect · Researcher · Speaker',
   bioShort:
-    'Yogendra K. Bhardwaj is an AI & Data Solutions Architect with 18 years of enterprise experience, architecting AI agents, retrieval-augmented generation (RAG) and data platforms for banking, insurance, life-sciences, transportation and manufacturing organizations. Bhardwaj’s published research focuses on securing MCP-mediated RAG pipelines against injection.',
+    'Yogendra Bhardwaj is an AI & Data Solutions Architect with 18 years of enterprise experience, architecting AI agents, retrieval-augmented generation (RAG) and data platforms for banking, insurance, life-sciences, transportation and manufacturing organizations. Bhardwaj’s published research focuses on securing MCP-mediated RAG pipelines against injection.',
   bioLong:
-    'Yogendra K. Bhardwaj is an AI & Data Solutions Architect with 18 years of experience delivering enterprise data and AI platforms across banking, insurance, life sciences, public transportation, asset management and manufacturing. Currently leading agentic AI architecture for drug discovery on Microsoft Discovery Studio, Bhardwaj co-engineers with Microsoft product teams on Azure AI Foundry Hosted Agents, Claude and GraphRAG. Earlier work includes a grounded RAG assistant used by 200+ banking service representatives, a 5,000-user loan-processing platform, predictive maintenance and field-service automation for a 2,000-asset transit fleet, and AI pipelines that reverse-engineer legacy code into specifications. The common thread is AI that can be trusted in production: guardrails, evaluation, human-in-the-loop controls and audit trails. Bhardwaj’s research on securing Model Context Protocol (MCP)-mediated RAG pipelines appeared in 2026, a book on AI is in progress, and Bhardwaj volunteers as a guest lecturer for college students.',
+    'Yogendra Bhardwaj is an AI & Data Solutions Architect with 18 years of experience delivering enterprise data and AI platforms across banking, insurance, life sciences, public transportation, asset management and manufacturing. Currently leading agentic AI architecture for drug discovery on Microsoft Discovery Studio, Bhardwaj co-engineers with Microsoft product teams on Azure AI Foundry Hosted Agents, Claude and GraphRAG. Earlier work includes a grounded RAG assistant used by 200+ banking service representatives, a 5,000-user loan-processing platform, predictive maintenance and field-service automation for a 2,000-asset transit fleet, and AI pipelines that reverse-engineer legacy code into specifications. The common thread is AI that can be trusted in production: guardrails, evaluation, human-in-the-loop controls and audit trails. Bhardwaj’s research on securing Model Context Protocol (MCP)-mediated RAG pipelines appeared in 2026, a book on AI is in progress, and Bhardwaj volunteers as a guest lecturer for college students.',
   roles: [
     {
       role: 'Keynote & invited speaker',

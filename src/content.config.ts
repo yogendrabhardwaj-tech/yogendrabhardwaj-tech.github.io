@@ -28,6 +28,25 @@ const notes = defineCollection({
   }),
 });
 
+// Personal blog: learnings, utility guides and "how to become X" roadmaps.
+// Drop .md / .mdx files in src/content/blog/. Files starting with "_" (prompt, template, plan) are ignored.
+const blog = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/blog' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().max(90),
+      description: z.string().max(200),
+      date: z.coerce.date(),
+      updated: z.coerce.date().optional(),
+      category: z.enum(['learn', 'utility', 'how-to-become']),
+      tags: z.array(z.string()).default([]),
+      cover: image().optional(),
+      coverAlt: z.string().optional(),
+      featured: z.boolean().default(false),
+      draft: z.boolean().default(false),
+    }),
+});
+
 const sessions = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/sessions' }),
   schema: z.object({
@@ -45,4 +64,4 @@ const sessions = defineCollection({
   }),
 });
 
-export const collections = { work, notes, sessions };
+export const collections = { work, notes, blog, sessions };

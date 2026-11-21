@@ -1,0 +1,98 @@
+---
+// Blog listing layout: page header, main column (slot) and sidebar.
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../PageHeader.astro';
+import { categories, type CategoryKey } from '../../data/blog';
+import { getPosts, tagSlug } from '../../lib/content';
+import { site } from '../../data/profile';
+
+interface Props { title: string; description: string; eyebrow: string; heading: string; lede?: string; active?: string }
+const { title, description, eyebrow, heading, lede, active } = Astro.props;
+
+const posts = await getPosts();
+const counts = Object.fromEntries(
+  (Object.keys(categories) as CategoryKey[]).map((k) => [k, posts.filter((p) => p.data.category === k).length]),
+);
+const tagCount = new Map<string, number>();
+posts.flatMap((p) => p.data.tags).forEach((t) => tagCount.set(t, (tagCount.get(t) ?? 0) + 1));
+const tags = [...tagCount].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 24);
+---
+
+<Base title={title} description={description}>
+  <PageHeader eyebrow={eyebrow} title={heading} lede={lede}>
+    <nav class="cats" aria-label="Blog categories">
+      <a href="/blog/" class:list={['tag', { on: active === 'all' }]}>All posts</a>
+      {(Object.keys(categories) as CategoryKey[]).map((k) => (
+        <a href={`/blog/category/${k}/`} class:list={['tag', { on: active === k }]}>{categories[k].label}</a>
+      ))}
+    </nav>
+  </PageHeader>
+
+  <section class="section blog">
+    <div class="container layout">
+      <div class="main"><slot /></div>
+
+      <aside class="side" aria-label="Blog sidebar">
+        <div class="box">
+          <h2 class="bh mono">Topics</h2>
+          <ul class="topics">
+            {(Object.keys(categories) as CategoryKey[]).map((k) => (
+              <li>
+                <a href={`/blog/category/${k}/`} class:list={{ on: active === k }}>
+                  <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={categories[k].icon} /></svg></span>
+                  <span class="tl">{categories[k].label}</span>
+                  <span class="n mono">{counts[k]}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {tags.length > 0 && (
+          <div class="box">
+            <h2 class="bh mono">Tags</h2>
+            <div class="tags">
+              {tags.map(([t]) => <a class:list={['tag', { on: active === `tag:${tagSlug(t)}` }]} href={`/blog/tag/${tagSlug(t)}/`}>#{t}</a>)}
+            </div>
+          </div>
+        )}
+
+        <div class="box sticky">
+          <h2 class="bh mono">Follow along</h2>
+          <p>New posts on learning, tools and career roadmaps. No spam, no tracking: subscribe by RSS or follow on LinkedIn.</p>
+          <div class="acts">
+            <a class="btn btn-primary" href="/blog/rss.xml">RSS feed</a>
+            <a class="btn" href={site.linkedin} target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
+          <p class="small">Have a topic you’d like covered? <a class="link" href="/#contact">Get in touch</a>.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .cats .tag { font-size: 0.8rem; padding: 6px 14px; }
+  .cats .tag:hover, .cats .tag.on { background: #fff; color: #0b0d12; border-color: #fff; }
+  .blog { padding-block: clamp(40px, 6vw, 72px) var(--section); }
+  .layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 2fr); gap: clamp(32px, 4vw, 56px); align-items: start; }
+  .main { display: grid; gap: 18px; }
+  .side { display: grid; gap: 20px; }
+  .box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px; display: grid; gap: 14px; }
+  .box p { color: var(--text-2); font-size: 0.93rem; }
+  .box .small { font-size: 0.85rem; color: var(--muted); }
+  .bh { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .topics { list-style: none; padding: 0; display: grid; gap: 6px; }
+  .topics a { display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: 10px; transition: background-color 0.2s; }
+  .topics a:hover, .topics a.on { background: var(--surface-2); }
+  .ic { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 9px; color: #fff; background: linear-gradient(135deg, var(--c2), var(--c3) 60%, var(--c4)); flex: none; }
+  .ic svg { width: 18px; height: 18px; }
+  .tl { font-weight: 600; }
+  .n { margin-left: auto; color: var(--muted); font-size: 0.75rem; }
+  .tags .tag:hover, .tags .tag.on { color: var(--text); border-color: var(--accent); }
+  .acts { display: flex; flex-wrap: wrap; gap: 10px; }
+  .acts .btn { height: 40px; padding: 0 16px; font-size: 0.88rem; }
+  @media (min-width: 961px) { .sticky { position: sticky; top: calc(var(--nav-h) + 20px); } }
+  @media (max-width: 960px) { .layout { grid-template-columns: 1fr; } }
+</style>

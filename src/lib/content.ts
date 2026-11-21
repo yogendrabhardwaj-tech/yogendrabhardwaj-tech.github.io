@@ -6,6 +6,19 @@ export async function getNotes() {
   return all.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
+/** Blog posts visible in this build, newest first. Drafts appear in `astro dev` only. */
+export async function getPosts() {
+  const all = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);
+  return all.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+}
+
+/** Minutes to read, from the raw body (HTML tags stripped), at ~220 words per minute. */
+export const readTime = (body = '') =>
+  Math.max(1, Math.round(body.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length / 220));
+
+export const tagSlug = (t: string) =>
+  t.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
 export async function getWork() {
   return (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 }
