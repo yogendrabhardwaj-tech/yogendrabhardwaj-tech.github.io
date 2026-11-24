@@ -1,6 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { site, research, academicProfile as ap, metrics } from '../../data/profile';
+import { getSessions } from '../../lib/content';
+
+const lectures = (await getSessions()).filter((s) => !s.data.placeholder);
 
 const pub = research.publications[0];
 const impact = metrics.filter((m) => ['18', '200+', '15→5', '3×'].includes(m.value));
@@ -89,6 +92,17 @@ const impact = metrics.filter((m) => ['18', '200+', '15→5', '3×'].includes(m.
               <li><strong>IGI Global</strong> — {research.reviewing.records.filter((r) => r.venue.startsWith('IGI')).length} book chapters, double-anonymized (May 2026)</li>
             </ul>
           </section>
+
+          {lectures.length > 0 && (
+            <section>
+              <h3 class="s-h">Faculty development &amp; guest lectures</h3>
+              <ul class="s-list">
+                {lectures.map((l) => (
+                  <li><strong>{l.data.topic}</strong> — {l.data.format.toLowerCase()}, {l.data.department ? `${l.data.department}, ` : ''}{l.data.institution}{l.data.date ? ` (${l.data.date.getUTCFullYear()})` : l.data.period && ` (${l.data.period})`}</li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           <section>
             <h3 class="s-h">Credentials</h3>

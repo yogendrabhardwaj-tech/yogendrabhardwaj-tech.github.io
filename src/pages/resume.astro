@@ -72,7 +72,7 @@ const sessions = (await getSessions()).filter((s) => !s.data.placeholder);
         <h2 class="r-h">Teaching &amp; speaking</h2>
         <ul>
           {sessions.map((s) => (
-            <li><strong>{s.data.topic}</strong> — {s.data.format}, {s.data.institution}{s.data.date && `, ${s.data.date.getUTCFullYear()}`}</li>
+            <li><strong>{s.data.topic}</strong> — {s.data.format}, {s.data.institution}{s.data.date ? `, ${s.data.date.getUTCFullYear()}` : s.data.period && `, ${s.data.period}`}</li>
           ))}
         </ul>
       </section>

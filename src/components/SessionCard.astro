@@ -3,7 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 interface Props { entry: CollectionEntry<'sessions'>; showBody?: boolean }
 const { entry, showBody = false } = Astro.props;
 const d = entry.data;
-const date = d.date?.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+const date = d.date?.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' }) ?? d.period;
 ---
 
 <article class:list={['card', 'session', { 'is-placeholder': d.placeholder }]}>

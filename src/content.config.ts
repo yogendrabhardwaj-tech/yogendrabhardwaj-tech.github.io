@@ -53,9 +53,11 @@ const sessions = defineCollection({
     institution: z.string(),
     department: z.string().optional(),
     topic: z.string(),
-    format: z.enum(['Guest lecture', 'Workshop', 'Hands-on lab', 'Panel', 'Webinar', 'Keynote']),
+    format: z.enum(['Guest lecture', 'Workshop', 'Faculty development program', 'Hands-on lab', 'Panel', 'Webinar', 'Keynote']),
     theme: z.enum(['GenAI & Agents', 'Data & Cloud', 'Careers & Industry']),
     date: z.coerce.date().optional(),
+    /** Free-text timing when the exact date is unknown, e.g. "2020–21". */
+    period: z.string().optional(),
     audience: z.string().optional(),
     location: z.string().optional(),
     slides: z.string().url().optional(),
